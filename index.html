@@ -7,53 +7,56 @@
     <style>
         body, html {
             margin: 0; padding: 0; height: 100%; width: 100%;
-            font-family: sans-serif; background-color: #1a1a2e; color: white; overflow: hidden;
+            font-family: 'Segoe UI', sans-serif; background-color: #1a1a2e; color: white; overflow: hidden;
         }
         nav { display: flex; background-color: #16213e; border-bottom: 2px solid #e94560; }
         .tab-btn {
             flex: 1; padding: 12px; border: none; background: none;
-            color: white; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.3s;
+            color: white; font-weight: bold; cursor: pointer; font-size: 11px; transition: 0.3s;
+            text-transform: uppercase;
         }
         .tab-btn.active { background-color: #e94560; }
+        
         .main-container { width: 100%; height: calc(100vh - 45px); position: relative; }
         
-        /* Frame Styling */
-        iframe { width: 100%; height: 100%; border: none; display: none; }
+        iframe { width: 100%; height: 100%; border: none; display: none; background-color: #1a1a2e; }
         iframe.active { display: block; }
 
-        /* Pesan jika server down */
-        .error-msg {
+        /* Tombol Darurat jika Frame Error */
+        .fallback-container {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; color: #888; font-size: 14px; z-index: -1;
+            text-align: center; width: 80%; z-index: -1;
         }
+        .btn-open {
+            display: inline-block; margin-top: 15px; padding: 10px 20px;
+            background-color: #e94560; color: white; text-decoration: none;
+            border-radius: 5px; font-weight: bold; font-size: 14px;
+        }
+
         .info-bar {
-            position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.7);
-            font-size: 10px; text-align: center; padding: 5px 0;
+            position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.8);
+            font-size: 10px; text-align: center; padding: 5px 0; border-top: 1px solid #333;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <button class="tab-btn active" onclick="switchCCTV('kota', this)">KOTA</button>
-        <button class="tab-btn" onclick="switchCCTV('kabupaten', this)">KABUPATEN</button>
-        <button class="tab-btn" onclick="switchCCTV('jabar', this)">JALUR PROVINSI</button>
+        <button class="tab-btn active" onclick="switchCCTV('kota', this, 'https://pelindung.bandung.go.id/cctv')">KOTA</button>
+        <button class="tab-btn" onclick="switchCCTV('kabupaten', this, 'https://atcs.bandungkab.go.id/')">KABUPATEN</button>
+        <button class="tab-btn" onclick="switchCCTV('jabar', this, 'http://atcs.dishub.jabarprov.go.id/view-cctv')">PROVINSI</button>
     </nav>
 
     <div class="main-container">
-        <!-- Layer pesan jika iframe gagal muat -->
-        <div class="error-msg">
-            <p>Memuat Kamera...</p>
-            <p style="font-size: 11px;">Jika layar tetap kosong, server penyedia mungkin sedang offline.</p>
+        <!-- Pesan Cadangan (Terlihat jika iframe gagal/hitam) -->
+        <div class="fallback-container">
+            <p id="error-text">Memuat Kamera...</p>
+            <p style="font-size: 12px; color: #888;">Jika layar tetap gelap, klik tombol di bawah:</p>
+            <a id="external-link" href="https://pelindung.bandung.go.id/cctv" target="_blank" class="btn-open">BUKA LIVE STREAM</a>
         </div>
 
-        <!-- Kota Bandung -->
         <iframe id="iframe-kota" class="active" src="https://pelindung.bandung.go.id/cctv"></iframe>
-        
-        <!-- Kabupaten Bandung (Alternative Link) -->
         <iframe id="iframe-kabupaten" src="https://atcs.bandungkab.go.id/"></iframe>
-
-        <!-- Jalur Provinsi (Dishub Jabar) - Biasanya lebih stabil untuk area perbatasan -->
         <iframe id="iframe-jabar" src="http://atcs.dishub.jabarprov.go.id/view-cctv"></iframe>
     </div>
 
@@ -62,11 +65,17 @@
     </div>
 
     <script>
-        function switchCCTV(wilayah, element) {
+        function switchCCTV(wilayah, element, url) {
+            // Update Tab
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('iframe').forEach(frame => frame.classList.remove('active'));
+            
             element.classList.add('active');
             document.getElementById('iframe-' + wilayah).classList.add('active');
+            
+            // Update Link Cadangan
+            document.getElementById('external-link').href = url;
+            document.getElementById('error-text').textContent = "Menampilkan Mode " + wilayah.toUpperCase();
         }
 
         function updateClock() {
