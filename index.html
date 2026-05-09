@@ -2,134 +2,99 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag wajib agar tampilan menyesuaikan lebar layar HP -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCTV Bandung Mobile Friendly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dashboard CCTV Bandung</title>
     <style>
-        body {
-            font-family: sans-serif;
-            background-color: #1a1a2e;
-            color: #ffffff;
+        body, html {
             margin: 0;
-            padding: 10px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #1a1a2e;
+            overflow: hidden; /* Menghilangkan scroll ganda */
         }
 
+        /* Header yang ramping untuk HP */
         header {
-            text-align: center;
-            padding: 15px 0;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-bottom: 2px solid #e94560;
-        }
-
-        .status-bar {
-            background-color: #0f3460;
-            padding: 8px 15px;
-            border-radius: 5px;
-            margin: 10px 0;
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Container Grid yang Pintar */
-        .cctv-grid {
-            display: grid;
-            /* Di desktop: minimal 300px per kolom. Di HP: otomatis 1 kolom full */
-            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-            gap: 15px;
-        }
-
-        /* Penyesuaian untuk layar Tablet/Laptop (Lebih dari 768px) */
-        @media (min-width: 768px) {
-            .cctv-grid {
-                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            }
-        }
-
-        .cctv-card {
             background-color: #16213e;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #30475e;
-        }
-
-        .cctv-header {
+            color: white;
             padding: 10px;
-            background-color: #e94560;
+            text-align: center;
             font-size: 14px;
             font-weight: bold;
+            border-bottom: 2px solid #e94560;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .video-box {
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #4eff4e;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* Container utama agar iframe memenuhi layar */
+        .main-container {
             position: relative;
             width: 100%;
-            /* Menjaga aspek rasio video 16:9 agar tidak gepeng di HP */
-            padding-top: 56.25%; 
-            background-color: #000;
+            height: calc(100vh - 45px); /* Potong tinggi header */
         }
 
-        .video-box iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        footer {
-            text-align: center;
-            font-size: 10px;
-            color: #888;
-            margin-top: 20px;
-            padding-bottom: 20px;
+        /* Tombol bantuan floating */
+        .info-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(233, 69, 96, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            pointer-events: none; /* Agar tidak menghalangi klik peta */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
 
-    <header>Sistem Pemantauan CCTV Bandung</header>
+    <header>
+        <span><span class="status-dot"></span> LIVE BANDUNG</span>
+        <span id="clock" style="font-size: 11px; opacity: 0.8;"></span>
+    </header>
 
-    <div class="status-bar">
-        <span>Sistem: <strong style="color: #4eff4e;">ONLINE</strong></span>
-        <span id="clock">--:--:-- WIB</span>
-    </div>
-
-    <div class="cctv-grid">
-        <!-- Card 1 -->
-        <div class="cctv-card">
-            <div class="cctv-header">SIMPANG DAGO</div>
-            <div class="video-box">
-                <iframe src="https://pelindung.bandung.go.id/cctv/dago"></iframe>
-            </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="cctv-card">
-            <div class="cctv-header">SIMPANG PASTEUR</div>
-            <div class="video-box">
-                <iframe src="https://pelindung.bandung.go.id/cctv/pasteur"></iframe>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="cctv-card">
-            <div class="cctv-header">SIMPANG ASIA AFRIKA</div>
-            <div class="video-box">
-                <iframe src="https://pelindung.bandung.go.id/cctv/asia-afrika"></iframe>
-            </div>
+    <div class="main-container">
+        <!-- Memuat peta seluruh titik CCTV Bandung -->
+        <iframe 
+            src="https://pelindung.bandung.go.id/cctv" 
+            allow="geolocation; microphone; camera">
+        </iframe>
+        
+        <div class="info-overlay">
+            Klik ikon kamera pada peta untuk melihat video
         </div>
     </div>
-
-    <footer>
-        Data real-time dari portal resmi Kota Bandung.
-    </footer>
 
     <script>
+        // Update jam tiap detik
         function updateClock() {
             const now = new Date();
-            document.getElementById('clock').textContent = now.toLocaleTimeString('id-ID') + " WIB";
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds} WIB`;
         }
         setInterval(updateClock, 1000);
         updateClock();
