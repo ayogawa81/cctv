@@ -3,98 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard CCTV Bandung</title>
+    <title>CCTV Bandung Raya (Kota & Kabupaten)</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: sans-serif;
             background-color: #1a1a2e;
-            overflow: hidden; /* Menghilangkan scroll ganda */
-        }
-
-        /* Header yang ramping untuk HP */
-        header {
-            background-color: #16213e;
             color: white;
-            padding: 10px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            border-bottom: 2px solid #e94560;
+            overflow: hidden;
+        }
+
+        /* Navigasi Tab untuk pindah wilayah */
+        nav {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: #16213e;
+            border-bottom: 2px solid #e94560;
         }
 
-        .status-dot {
-            height: 8px;
-            width: 8px;
-            background-color: #4eff4e;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
         }
 
-        /* Container utama agar iframe memenuhi layar */
+        .tab-btn.active {
+            background-color: #e94560;
+        }
+
         .main-container {
-            position: relative;
             width: 100%;
-            height: calc(100vh - 45px); /* Potong tinggi header */
+            height: calc(100vh - 45px); /* Tinggi layar dikurangi tinggi nav */
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: none; /* Sembunyikan semua iframe secara default */
         }
 
-        /* Tombol bantuan floating */
-        .info-overlay {
+        iframe.active {
+            display: block; /* Tampilkan hanya yang dipilih */
+        }
+
+        .info-bar {
             position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(233, 69, 96, 0.9);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 11px;
-            pointer-events: none; /* Agar tidak menghalangi klik peta */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            white-space: nowrap;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            font-size: 10px;
+            text-align: center;
+            padding: 5px 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <span><span class="status-dot"></span> LIVE BANDUNG</span>
-        <span id="clock" style="font-size: 11px; opacity: 0.8;"></span>
-    </header>
+    <nav>
+        <button class="tab-btn active" onclick="switchCCTV('kota', this)">KOTA BANDUNG</button>
+        <button class="tab-btn" onclick="switchCCTV('kabupaten', this)">KAB. BANDUNG</button>
+    </nav>
 
     <div class="main-container">
-        <!-- Memuat peta seluruh titik CCTV Bandung -->
-        <iframe 
-            src="https://pelindung.bandung.go.id/cctv" 
-            allow="geolocation; microphone; camera">
-        </iframe>
+        <!-- Iframe Kota Bandung -->
+        <iframe id="iframe-kota" class="active" src="https://pelindung.bandung.go.id/cctv"></iframe>
         
-        <div class="info-overlay">
-            Klik ikon kamera pada peta untuk melihat video
-        </div>
+        <!-- Iframe Kabupaten Bandung (ATCS Kab Bandung) -->
+        <iframe id="iframe-kabupaten" src="https://atcs.bandungkab.go.id/"></iframe>
+    </div>
+
+    <div class="info-bar">
+        Monitoring Real-Time Bandung Raya | <span id="clock"></span>
     </div>
 
     <script>
-        // Update jam tiap detik
+        function switchCCTV(wilayah, element) {
+            // Hapus kelas active dari semua tombol
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            // Hapus kelas active dari semua iframe
+            document.querySelectorAll('iframe').forEach(frame => frame.classList.remove('active'));
+
+            // Aktifkan yang dipilih
+            element.classList.add('active');
+            document.getElementById('iframe-' + wilayah).classList.add('active');
+        }
+
         function updateClock() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds} WIB`;
+            document.getElementById('clock').textContent = now.toLocaleTimeString('id-ID') + " WIB";
         }
         setInterval(updateClock, 1000);
         updateClock();
