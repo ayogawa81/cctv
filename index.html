@@ -10,6 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+/* ==========================================================================
+   DEKLARASI FONT & RESET DASAR
+   ========================================================================== */
 @font-face {
   font-family: 'DengXian';
   src: local('DengXian'), local('DengXian Regular'), local('Microsoft YaHei'), local('SimHei'), sans-serif;
@@ -25,20 +28,30 @@
 }
 
 * {
-  margin: 0; padding: 0; box-sizing: border-box;
-  font-family: 'DengXian', 'Plus Jakarta Sans', 'Microsoft YaHei', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html, body {
-  width: 100%; height: 100%; height: 100vh; height: 100dvh;
-  overflow: hidden; background: #020617; color: #f8fafc;
+  width: 100%;
+  height: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #020617;
+  color: #f8fafc;
 }
 
 body {
-  display: flex; flex-direction: column; position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
-/* SLIDE CONTAINER ARCHITECTURE */
+/* ==========================================================================
+   ARSITEKTUR SLIDE & TRANSISI
+   ========================================================================== */
 .slide-wrapper {
   position: relative;
   width: 100%;
@@ -49,15 +62,17 @@ body {
 
 .slide {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-  transform: scale(0.99);
+  transform: scale(0.995);
 }
 
 .slide.active {
@@ -68,32 +83,30 @@ body {
   z-index: 2;
 }
 
-/* SLIDE 1 THEME (CYBER DENGXIAN - PENGUMUMAN) */
-#slide-1 {
-  background: radial-gradient(circle at 10% 20%, #080d1a 0%, #020617 90%);
+/* ==========================================================================
+   SLIDE 1: PENGUMUMAN (100% WARNA, FONT & EFEK ASLI PENGUMUMAN.txt)
+   ========================================================================== */
+#slide-pengumuman,
+#slide-pengumuman * {
+  font-family: 'DengXian', 'Microsoft YaHei', 'SimHei', sans-serif;
 }
-#slide-1::before {
+
+#slide-pengumuman {
+  background: radial-gradient(circle at 10% 20%, #080d1a 0%, #020617 90%);
+  color: #f8fafc;
+}
+
+#slide-pengumuman::before {
   content: ''; position: absolute; top: -10%; left: -10%; width: 40%; height: 40%;
   background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(0,0,0,0) 70%); pointer-events: none;
 }
-#slide-1::after {
+
+#slide-pengumuman::after {
   content: ''; position: absolute; bottom: -10%; right: -10%; width: 40%; height: 40%;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(0,0,0,0) 70%); pointer-events: none;
 }
 
-/* SLIDE 2 THEME (TACTICAL AMBER - PROGJA) */
-#slide-2 {
-  background: #05070a;
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
-}
-#slide-2 * {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-/* SHARED & SPECIFIC HEADERS */
-header {
+#slide-pengumuman header {
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
@@ -102,118 +115,431 @@ header {
   flex-shrink: 0;
 }
 
-#slide-2 header {
-  background: rgba(13, 17, 23, 0.9);
-  border-bottom: 2px solid rgba(245, 158, 11, 0.35);
-}
-
-.logo-title h1 {
-  font-size: 2rem; font-weight: 800; letter-spacing: 1.5px;
+#slide-pengumuman .logo-title h1 {
+  font-size: 2.2rem; font-weight: 800; letter-spacing: 1.5px;
   color: #38bdf8;
   text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(56, 189, 248, 0.3);
   text-transform: uppercase;
 }
 
-#slide-2 .logo-title h1 {
-  font-size: 1.9rem; font-weight: 900;
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+#slide-pengumuman .logo-title p {
+  color: #94a3b8; font-size: 1rem; margin-top: 3px; font-weight: 700;
 }
 
-.logo-title p {
-  color: #94a3b8; font-size: 0.95rem; margin-top: 3px; font-weight: 700;
-}
-
-#slide-2 .logo-title p {
-  color: #64748b; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;
-}
-
-.datetime-container {
+#slide-pengumuman .datetime-container {
   text-align: right; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(10px);
-  padding: 8px 18px; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.3);
-  display: flex; align-items: center; gap: 12px;
+  padding: 10px 22px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3);
+  display: flex; align-items: center; gap: 15px;
   box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
-#slide-2 .datetime-container {
-  background: rgba(22, 27, 34, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.clock-display {
-  font-family: 'JetBrains Mono', monospace !important; font-size: 2.2rem; font-weight: 800;
+#slide-pengumuman #clock-1 {
+  font-family: 'JetBrains Mono', 'DengXian', monospace; font-size: 2.4rem; font-weight: 800;
   color: #38bdf8; text-shadow: 0 0 15px rgba(56, 189, 248, 0.8); line-height: 1;
 }
 
-#slide-2 .clock-display {
-  color: #f59e0b; text-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+#slide-pengumuman #date-1 {
+  font-size: 1rem; color: #f1f5f9; margin-top: 4px; font-weight: 700;
 }
 
-.date-display {
-  font-size: 0.9rem; color: #f1f5f9; margin-top: 4px; font-weight: 700;
-}
-
-#slide-2 .date-display {
-  color: #94a3b8; font-size: 0.85rem;
-}
-
-.header-controls {
-  display: flex; align-items: center; gap: 8px;
-}
-
-.btn-setting {
+#slide-pengumuman .btn-setting {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: #f8fafc;
-  border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 14px; border-radius: 10px;
-  cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.25s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 18px; border-radius: 12px;
+  cursor: pointer; font-weight: 700; font-size: 0.95rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.btn-setting:hover {
+#slide-pengumuman .btn-setting:hover {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border-color: #60a5fa;
   transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
 }
 
-.btn-amber {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-  border-color: #f59e0b;
-}
-.btn-amber:hover {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-}
-
-.btn-timer-cfg {
+#slide-pengumuman .btn-timer-cfg {
   background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(56, 189, 248, 0.4);
+  border: 1px solid rgba(56, 189, 248, 0.45);
   color: #38bdf8;
 }
-.btn-timer-cfg:hover {
-  background: rgba(56, 189, 248, 0.2);
-  border-color: #38bdf8;
+
+#slide-pengumuman main {
+  flex: 1;
+  padding: 20px 30px 55px 30px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  overflow: hidden;
+  height: calc(100% - 90px);
 }
 
-/* SLIDE INDICATOR & PROGRESS BAR */
+#slide-pengumuman .table-container {
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px);
+  border-radius: 20px; overflow-y: auto; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#slide-pengumuman table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; }
+
+#slide-pengumuman th {
+  position: sticky; top: 0; z-index: 5;
+  background: #0f172a; color: #38bdf8; font-size: 1.1rem; font-weight: 800;
+  padding: 18px 16px; text-transform: uppercase; letter-spacing: 1px;
+  border-bottom: 3px solid rgba(56, 189, 248, 0.4);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+#slide-pengumuman td {
+  padding: 16px 16px; font-size: 1.1rem; color: #f8fafc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); vertical-align: middle; transition: background 0.2s;
+}
+
+#slide-pengumuman tr:hover td { background: rgba(51, 65, 85, 0.4); }
+
+/* WARNA KOLOM MENYALA & HIGH CONTRAST ASLI PENGUMUMAN */
+#slide-pengumuman .col-time {
+  font-weight: 800;
+  color: #facc15;
+  font-family: 'JetBrains Mono', 'DengXian', monospace;
+  width: 16%;
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+}
+
+#slide-pengumuman .col-time .sub-date {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  font-weight: normal;
+  margin-bottom: 2px;
+  text-shadow: none;
+}
+
+#slide-pengumuman .col-event {
+  font-weight: 800;
+  color: #ffffff;
+  width: 18%;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+#slide-pengumuman .col-leader {
+  color: #e081ff;
+  font-weight: 800;
+  width: 14%;
+  text-shadow: 0 0 12px rgba(224, 129, 255, 0.6);
+}
+
+#slide-pengumuman .col-personnel {
+  color: #38bdf8;
+  font-weight: 800;
+  width: 13%;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+}
+
+#slide-pengumuman .col-gam {
+  color: #f472b6;
+  font-weight: 800;
+  width: 10%;
+  text-shadow: 0 0 12px rgba(244, 114, 182, 0.6);
+}
+
+#slide-pengumuman .col-room {
+  color: #4ade80;
+  font-weight: 800;
+  width: 11%;
+  text-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+}
+
+#slide-pengumuman .col-status { text-align: center; width: 9%; }
+#slide-pengumuman .col-action { text-align: center; width: 9%; }
+
+/* BADGE STATUS MENYALA ASLI PENGUMUMAN */
+#slide-pengumuman .status-badge {
+  display: inline-block; padding: 8px 14px; border-radius: 20px; font-size: 0.95rem;
+  font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing: 0.5px;
+}
+
+#slide-pengumuman .status-ongoing {
+  background: rgba(59, 130, 246, 0.25); color: #60a5fa;
+  border: 1px solid #60a5fa; box-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
+  animation: pulse-glow-pengumuman 2s infinite;
+}
+
+#slide-pengumuman .status-waiting {
+  background: rgba(245, 158, 11, 0.25); color: #fbbf24;
+  border: 1px solid #fbbf24; box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+}
+
+#slide-pengumuman .status-done {
+  background: rgba(16, 185, 129, 0.25); color: #34d399;
+  border: 1px solid #34d399; box-shadow: 0 0 12px rgba(52, 211, 153, 0.5);
+}
+
+@keyframes pulse-glow-pengumuman {
+  0% { box-shadow: 0 0 10px rgba(96, 165, 250, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(96, 165, 250, 0.9); }
+  100% { box-shadow: 0 0 10px rgba(96, 165, 250, 0.5); }
+}
+
+#slide-pengumuman .btn-action-group { display: flex; gap: 8px; justify-content: center; align-items: center; }
+
+#slide-pengumuman .btn-icon {
+  background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px; width: 38px; height: 38px; display: flex; justify-content: center; align-items: center;
+  cursor: pointer; transition: all 0.2s; color: #f8fafc; fill: currentColor;
+}
+#slide-pengumuman .btn-icon svg { width: 20px; height: 20px; }
+#slide-pengumuman .btn-edit:hover { background: #f59e0b; border-color: #fbbf24; transform: scale(1.08); }
+#slide-pengumuman .btn-delete:hover { background: #ef4444; border-color: #f87171; transform: scale(1.08); }
+#slide-pengumuman .btn-save { background: #10b981; border-color: #34d399; }
+#slide-pengumuman .btn-save:hover { background: #059669; transform: scale(1.08); }
+
+#slide-pengumuman .edit-input,
+#slide-pengumuman .edit-select,
+#slide-pengumuman .edit-date {
+  background: #0f172a; border: 1px solid #3b82f6; color: #f8fafc;
+  padding: 6px 8px; border-radius: 6px; font-size: 0.9rem; width: 100%; font-weight: 700;
+}
+#slide-pengumuman .edit-time-container { display: flex; flex-direction: column; gap: 4px; }
+#slide-pengumuman .edit-time-group { display: flex; align-items: center; gap: 2px; }
+#slide-pengumuman .edit-select { padding: 4px 2px; font-family: 'JetBrains Mono', 'DengXian', monospace; }
+
+/* ==========================================================================
+   SLIDE 2: PROGJA (TACTICAL TASK MONITORING DASHBOARD)
+   ========================================================================== */
+#slide-progja,
+#slide-progja * {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#slide-progja {
+  background: #05070a;
+  color: #f1f5f9;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+}
+
+#slide-progja header {
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 16px 32px; display: flex;
+  justify-content: space-between; align-items: center;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  z-index: 10; flex-shrink: 0;
+}
+
+#slide-progja .logo-title h1 {
+  font-size: 1.8rem; font-weight: 900; letter-spacing: 1.5px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+#slide-progja .logo-title p {
+  color: #64748b; font-size: 0.85rem; margin-top: 2px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+
+#slide-progja .datetime-container {
+  text-align: right; background: rgba(22, 27, 34, 0.8); padding: 8px 20px;
+  border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; align-items: center; gap: 18px;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+#slide-progja #clock-2 {
+  font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; font-weight: 800;
+  color: #f59e0b; line-height: 1; text-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+#slide-progja #date-2 {
+  font-size: 0.85rem; color: #94a3b8; margin-top: 3px; font-weight: 700; letter-spacing: 0.5px;
+}
+
+#slide-progja .btn-setting {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  color: #ffffff; border: 1px solid #f59e0b; padding: 12px 22px;
+  border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 0.9rem;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+}
+
+#slide-progja .btn-setting:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+#slide-progja .btn-timer-cfg {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #38bdf8;
+  box-shadow: none;
+}
+
+#slide-progja .btn-timer-cfg:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
+}
+
+#slide-progja main {
+  flex: 1; padding: 24px 32px 55px 32px; display: flex; flex-direction: column;
+  z-index: 1; overflow: hidden; height: calc(100% - 90px);
+}
+
+#slide-progja .table-container {
+  width: 100%; height: 100%; background: rgba(13, 17, 23, 0.7);
+  border-radius: 14px; overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+#slide-progja .table-container::-webkit-scrollbar { width: 8px; }
+#slide-progja .table-container::-webkit-scrollbar-track { background: rgba(13, 17, 23, 0.5); }
+#slide-progja .table-container::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+#slide-progja .table-container::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+/* Tambahan styling smooth scrolling untuk auto-scroll tabel Progja */
+#slide-progja .table-container {
+  scroll-behavior: smooth;
+}
+
+#slide-progja table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; }
+
+#slide-progja th {
+  position: sticky; top: 0; z-index: 5;
+  background: #0d1117; color: #94a3b8;
+  font-size: 0.8rem; font-weight: 800; padding: 18px 10px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  border-bottom: 2px solid rgba(245, 158, 11, 0.4); text-align: center;
+}
+
+#slide-progja td {
+  padding: 16px 10px; font-size: 0.95rem; color: #e2e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle; text-align: center;
+  transition: background 0.2s;
+}
+
+#slide-progja tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.01); }
+#slide-progja tr:hover td { background: rgba(245, 158, 11, 0.03); }
+
+#slide-progja .col-no { width: 4%; font-weight: 800; color: #475569; font-family: 'JetBrains Mono', monospace; }
+#slide-progja .col-tgl { width: 8%; font-weight: 700; color: #cbd5e1; font-family: 'JetBrains Mono', monospace; }
+#slide-progja .col-jam { width: 8%; font-weight: 700; color: #f59e0b; font-family: 'JetBrains Mono', monospace; }
+#slide-progja .col-tugas { width: 23%; font-weight: 800; color: #ffffff; text-align: left; letter-spacing: 0.3px; }
+#slide-progja .col-penting { width: 8%; }
+#slide-progja .col-jenis { width: 10%; font-size: 0.85rem; letter-spacing: 0.5px; }
+#slide-progja .col-st-akan { width: 9%; }
+#slide-progja .col-st-sedang { width: 9%; }
+#slide-progja .col-st-selesai { width: 9%; }
+#slide-progja .col-ket { width: 13%; text-align: left; color: #94a3b8; font-weight: 600; font-size: 0.9rem; }
+#slide-progja .col-action { width: 5%; }
+
+/* CUSTOM CHECKBOX PROGJA */
+#slide-progja .chk-container {
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; user-select: none;
+}
+#slide-progja .chk-container input { display: none; }
+#slide-progja .checkmark {
+  width: 24px; height: 24px; border-radius: 6px;
+  border: 2px solid #334155; background: #090d16;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#slide-progja .chk-container:hover .checkmark { border-color: #64748b; }
+#slide-progja .checkmark:after {
+  content: ""; display: none; width: 5px; height: 10px;
+  border: solid white; border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg); margin-bottom: 2px;
+}
+#slide-progja .chk-container input:checked + .checkmark:after { display: block; }
+#slide-progja .chk-penting input:checked + .checkmark {
+  background: #dc2626; border-color: #ef4444;
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.7);
+}
+#slide-progja .chk-akan input:checked + .checkmark {
+  background: #d97706; border-color: #f59e0b;
+  box-shadow: 0 0 12px rgba(217, 119, 6, 0.7);
+}
+#slide-progja .chk-sedang input:checked + .checkmark {
+  background: #2563eb; border-color: #3b82f6;
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
+  animation: pulse-glow-blue 2s infinite;
+}
+#slide-progja .chk-selesai input:checked + .checkmark {
+  background: #059669; border-color: #10b981;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.7);
+}
+
+@keyframes pulse-glow-blue {
+  0% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.4); }
+  50% { box-shadow: 0 0 18px rgba(59, 130, 246, 0.9); }
+  100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.4); }
+}
+
+#slide-progja .btn-action-group { display: flex; gap: 6px; justify-content: center; }
+#slide-progja .btn-icon {
+  background: #161b22; border: 1px solid #30363d; border-radius: 6px;
+  width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;
+  cursor: pointer; color: #94a3b8; fill: currentColor; transition: all 0.2s;
+}
+#slide-progja .btn-icon svg { width: 14px; height: 14px; }
+#slide-progja .btn-edit:hover { background: #d97706; color: #fff; border-color: #f59e0b; }
+#slide-progja .btn-delete:hover { background: #dc2626; color: #fff; border-color: #ef4444; }
+#slide-progja .btn-save { background: #059669; color: #fff; border-color: #10b981; }
+
+#slide-progja .edit-input,
+#slide-progja .edit-select,
+#slide-progja .edit-date {
+  background: #090d16; border: 1px solid #f59e0b; color: #f8fafc;
+  padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; width: 100%; font-weight: 700;
+}
+
+/* ==========================================================================
+   KONTROL NAVIGASI SLIDE & PROGRESS BAR
+   ========================================================================== */
+.top-progress-track {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 999;
+}
+
+.top-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8, #10b981);
+  transition: width 0.25s linear;
+}
+
 .slide-nav-bar {
   position: fixed;
-  bottom: 14px;
+  bottom: 12px;
   right: 28px;
   z-index: 500;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(12px);
-  padding: 8px 14px;
+  padding: 7px 14px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+  font-family: 'DengXian', 'Plus Jakarta Sans', sans-serif;
 }
 
 .slide-pill {
   padding: 5px 12px;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
   border: 1px solid transparent;
@@ -235,7 +561,7 @@ header {
 }
 
 .timer-badge {
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.8rem;
   font-weight: 800;
   color: #cbd5e1;
@@ -253,197 +579,77 @@ header {
   border: none;
   color: #f8fafc;
   cursor: pointer;
-  font-size: 0.9rem;
-  padding: 2px 6px;
+  font-size: 0.85rem;
+  padding: 2px 5px;
   border-radius: 4px;
 }
-.btn-pause-slide:hover {
-  background: rgba(255,255,255,0.15);
-}
+.btn-pause-slide:hover { background: rgba(255,255,255,0.15); }
 
-.top-progress-track {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 3px;
-  background: rgba(255,255,255,0.06);
-  z-index: 999;
-}
-.top-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #38bdf8, #10b981);
-  transition: width 0.25s linear;
-}
-
-/* MAIN AREA & TABLES */
-main { 
-  flex: 1; padding: 20px 30px 55px 30px; display: flex; flex-direction: column; 
-  z-index: 1; overflow: hidden; height: calc(100% - 85px);
-}
-
-.table-container {
-  width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px);
-  border-radius: 18px; overflow-y: auto; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-#slide-2 .table-container {
-  background: rgba(13, 17, 23, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; }
-
-/* SLIDE 1 TABLE STYLES */
-#slide-1 th {
-  position: sticky; top: 0; z-index: 5;
-  background: #0f172a; color: #38bdf8; font-size: 1.05rem; font-weight: 800;
-  padding: 16px 14px; text-transform: uppercase; letter-spacing: 1px;
-  border-bottom: 3px solid rgba(56, 189, 248, 0.4);
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
-}
-#slide-1 td {
-  padding: 14px 14px; font-size: 1.05rem; color: #f8fafc;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08); vertical-align: middle; transition: background 0.2s;
-}
-#slide-1 tr:hover td { background: rgba(51, 65, 85, 0.4); }
-
-.col-time { font-weight: 800; color: #facc15; font-family: 'JetBrains Mono', monospace; width: 16%; text-shadow: 0 0 12px rgba(250, 204, 21, 0.6); }
-.col-event { font-weight: 800; color: #ffffff; width: 18%; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-.col-leader { color: #e081ff; font-weight: 800; width: 14%; text-shadow: 0 0 12px rgba(224, 129, 255, 0.6); }
-.col-personnel { color: #38bdf8; font-weight: 800; width: 13%; text-shadow: 0 0 12px rgba(56, 189, 248, 0.6); }
-.col-gam { color: #f472b6; font-weight: 800; width: 10%; text-shadow: 0 0 12px rgba(244, 114, 182, 0.6); }
-.col-room { color: #4ade80; font-weight: 800; width: 11%; text-shadow: 0 0 12px rgba(74, 222, 128, 0.6); }
-.col-status { text-align: center; width: 9%; }
-.col-action { text-align: center; width: 9%; }
-
-.status-badge {
-  display: inline-block; padding: 7px 12px; border-radius: 20px; font-size: 0.9rem;
-  font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing: 0.5px;
-}
-.status-ongoing {
-  background: rgba(59, 130, 246, 0.25); color: #60a5fa;
-  border: 1px solid #60a5fa; box-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
-  animation: pulse-glow 2s infinite;
-}
-.status-waiting { 
-  background: rgba(245, 158, 11, 0.25); color: #fbbf24; 
-  border: 1px solid #fbbf24; box-shadow: 0 0 12px rgba(251, 191, 36, 0.5); 
-}
-.status-done { 
-  background: rgba(16, 185, 129, 0.25); color: #34d399; 
-  border: 1px solid #34d399; box-shadow: 0 0 12px rgba(52, 211, 153, 0.5); 
-}
-
-@keyframes pulse-glow {
-  0% { box-shadow: 0 0 10px rgba(96, 165, 250, 0.5); }
-  50% { box-shadow: 0 0 20px rgba(96, 165, 250, 0.9); }
-  100% { box-shadow: 0 0 10px rgba(96, 165, 250, 0.5); }
-}
-
-/* SLIDE 2 TABLE STYLES (PROGJA) */
-#slide-2 th {
-  position: sticky; top: 0; z-index: 5; 
-  background: #0d1117; color: #94a3b8;
-  font-size: 0.8rem; font-weight: 800; padding: 16px 10px; 
-  letter-spacing: 1.5px; text-transform: uppercase;
-  border-bottom: 2px solid rgba(245, 158, 11, 0.4); text-align: center;
-}
-#slide-2 td {
-  padding: 14px 10px; font-size: 0.95rem; color: #e2e8f0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04); 
-  vertical-align: middle; text-align: center;
-  transition: background 0.2s;
-}
-#slide-2 tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.01); }
-#slide-2 tr:hover td { background: rgba(245, 158, 11, 0.04); }
-
-.col-no { width: 4%; font-weight: 800; color: #475569; font-family: 'JetBrains Mono', monospace; }
-.col-tgl { width: 8%; font-weight: 700; color: #cbd5e1; font-family: 'JetBrains Mono', monospace; }
-.col-jam { width: 8%; font-weight: 700; color: #f59e0b; font-family: 'JetBrains Mono', monospace; }
-.col-tugas { width: 23%; font-weight: 800; color: #ffffff; text-align: left !important; letter-spacing: 0.3px; }
-.col-penting { width: 8%; }
-.col-jenis { width: 10%; font-size: 0.85rem; letter-spacing: 0.5px; }
-.col-st-akan { width: 9%; }
-.col-st-sedang { width: 9%; }
-.col-st-selesai { width: 9%; }
-.col-ket { width: 13%; text-align: left !important; color: #94a3b8; font-weight: 600; font-size: 0.9rem; }
-.col-action-p { width: 6%; }
-
-/* CHECKBOXES PROGJA */
-.chk-container {
-  display: inline-flex; align-items: center; justify-content: center;
-  cursor: pointer; user-select: none;
-}
-.chk-container input { display: none; }
-.checkmark {
-  width: 24px; height: 24px; border-radius: 6px;
-  border: 2px solid #334155; background: #090d16;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.25s;
-}
-.chk-container:hover .checkmark { border-color: #64748b; }
-.checkmark:after {
-  content: ""; display: none; width: 5px; height: 10px;
-  border: solid white; border-width: 0 2.5px 2.5px 0;
-  transform: rotate(45deg); margin-bottom: 2px;
-}
-.chk-container input:checked + .checkmark:after { display: block; }
-.chk-penting input:checked + .checkmark { background: #dc2626; border-color: #ef4444; box-shadow: 0 0 12px rgba(220, 38, 38, 0.7); }
-.chk-akan input:checked + .checkmark { background: #d97706; border-color: #f59e0b; box-shadow: 0 0 12px rgba(217, 119, 6, 0.7); }
-.chk-sedang input:checked + .checkmark { background: #2563eb; border-color: #3b82f6; box-shadow: 0 0 15px rgba(37, 99, 235, 0.8); animation: pulse-glow-blue 2s infinite; }
-.chk-selesai input:checked + .checkmark { background: #059669; border-color: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.7); }
-
-@keyframes pulse-glow-blue {
-  0% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.4); }
-  50% { box-shadow: 0 0 18px rgba(59, 130, 246, 0.9); }
-  100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.4); }
-}
-
-/* ACTION BUTTONS & INPUTS */
-.btn-action-group { display: flex; gap: 6px; justify-content: center; align-items: center; }
-.btn-icon {
-  background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px; width: 34px; height: 34px; display: flex; justify-content: center; align-items: center;
-  cursor: pointer; transition: all 0.2s; color: #f8fafc; fill: currentColor;
-}
-.btn-icon svg { width: 17px; height: 17px; }
-.btn-edit:hover { background: #f59e0b; border-color: #fbbf24; transform: scale(1.08); }
-.btn-delete:hover { background: #ef4444; border-color: #f87171; transform: scale(1.08); }
-.btn-save { background: #10b981; border-color: #34d399; }
-.btn-save:hover { background: #059669; transform: scale(1.08); }
-
-.edit-input, .edit-select, .edit-date {
-  background: #0f172a; border: 1px solid #3b82f6; color: #f8fafc;
-  padding: 6px 8px; border-radius: 6px; font-size: 0.9rem; width: 100%; font-weight: 700;
-}
-.edit-time-container { display: flex; flex-direction: column; gap: 4px; }
-.edit-time-group { display: flex; align-items: center; gap: 2px; }
-.edit-select { padding: 4px 2px; font-family: 'JetBrains Mono', monospace; }
-
-/* MODALS */
+/* ==========================================================================
+   MODAL PANEL (PENGUMUMAN, PROGJA, & PENGATURAN WAKTU SLIDE)
+   ========================================================================== */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(2, 6, 23, 0.85);
   backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center;
   z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.3s ease;
+  font-family: 'DengXian', 'Plus Jakarta Sans', sans-serif;
 }
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
 .modal-content {
-  background: #0f172a; width: 90%; max-width: 560px;
-  border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.35); padding: 25px;
-  display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+  background: #0f172a; width: 90%; max-width: 600px;
+  border-radius: 24px; border: 1px solid rgba(56, 189, 248, 0.3); padding: 25px;
+  display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
 }
 
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
-.modal-header h2 { font-size: 1.3rem; color: #38bdf8; font-weight: 800; }
-.btn-close { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.btn-confirm-cancel {
+  flex: 1;
+  background: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-confirm-cancel:hover {
+  background: #334155;
+}
+
+.btn-confirm-delete {
+  flex: 1;
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: #ffffff;
+  border: 1px solid #f87171;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.btn-confirm-delete:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+}
+.modal-header h2 { font-size: 1.4rem; color: #38bdf8; font-weight: 800; }
+.btn-close { background: none; border: none; color: #94a3b8; font-size: 1.6rem; cursor: pointer; }
 .btn-close:hover { color: #ffffff; }
 
-.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; text-align: left; }
-.form-group label { font-size: 0.8rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; text-align: left; }
+.form-group label { font-size: 0.85rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 .form-group input, .form-group select, .time-picker-select {
   background-color: #1e293b; border: 1px solid #334155; color: #f8fafc;
@@ -457,42 +663,43 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
 
 .time-picker-select {
   border: none; background: transparent; padding: 4px 2px;
-  text-align: center; font-family: 'JetBrains Mono', monospace; font-weight: 800;
+  text-align: center; font-family: 'JetBrains Mono', 'DengXian', monospace; font-weight: 800;
   color: #38bdf8; font-size: 1rem; cursor: pointer;
 }
 
 .btn-add {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none;
-  padding: 13px; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%;
-  font-size: 1rem; margin-top: 8px; transition: all 0.2s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  padding: 14px; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%;
+  font-size: 1.05rem; margin-top: 10px; transition: all 0.2s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
 }
 .btn-add:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
 
+/* OVERLAY UNLOCK AUDIO TIZEN */
 #tizenAudioUnlocker {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
   background: rgba(2, 6, 23, 0.96); z-index: 99999;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
   color: white; text-align: center; padding: 20px;
+  font-family: 'DengXian', sans-serif;
 }
 </style>
 </head>
 <body>
 
-<!-- OVERLAY UNLOCK AUDIO & FULLSCREEN TV -->
 <div id="tizenAudioUnlocker">
-  <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: #38bdf8; font-weight: 800; text-shadow: 0 0 15px rgba(56,189,248,0.5);">SISTEM MONITORING TERPADU</h1>
-  <p style="font-size: 1.2rem; margin-bottom: 30px; color: #94a3b8; max-width: 540px; font-weight: bold;">Tekan tombol OK / Enter pada remote TV untuk mengaktifkan suara otomatis, rotasi slide, & Fullscreen.</p>
+  <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: #38bdf8; font-weight: 800; text-shadow: 0 0 15px rgba(56,189,248,0.5);">SISTEM MONITORING JADWAL & PROGJA</h1>
+  <p style="font-size: 1.2rem; margin-bottom: 30px; color: #94a3b8; max-width: 520px; font-weight: bold;">Tekan tombol OK / Enter pada remote TV untuk mengaktifkan audio otomatis & Fullscreen.</p>
   <button id="btnUnlockTizen" onclick="bukaKunciAudioTizen()" style="padding: 18px 40px; font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 10px 30px rgba(16,185,129,0.5);" autofocus>
-    🔊 TEKAN UNTUK AKTIFKAN DISPLAY
+    🔊 TEKAN UNTUK AKTIFKAN SUARA
   </button>
 </div>
 
-<!-- PROGRESS BAR PERPINDAHAN SLIDE -->
+<!-- PROGRESS BAR ROTASI SLIDE -->
 <div class="top-progress-track">
   <div class="top-progress-fill" id="slideProgressFill"></div>
 </div>
 
-<!-- NAVIGASI SLIDE & INDIKATOR WAKTU -->
+<!-- NAVIGASI SLIDE & HITUNG MUNDUR -->
 <div class="slide-nav-bar">
   <button class="slide-pill active-s1" id="pill-slide-1" onclick="goToSlide(0)">1. PENGUMUMAN</button>
   <button class="slide-pill" id="pill-slide-2" onclick="goToSlide(1)">2. PROGJA</button>
@@ -505,9 +712,9 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
 <div class="slide-wrapper">
 
   <!-- ========================================================= -->
-  <!-- SLIDE 1: PENGUMUMAN (JADWAL KEGIATAN & AGENDA UTAMA)      -->
+  <!-- SLIDE 1: PENGUMUMAN (ASLI PENGUMUMAN.txt)                 -->
   <!-- ========================================================= -->
-  <section class="slide active" id="slide-1">
+  <section class="slide active" id="slide-pengumuman">
     <header>
       <div class="logo-title">
         <h1>JADWAL KEGIATAN & AGENDA UTAMA SLOG KORPASGAT</h1>
@@ -515,13 +722,11 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
       </div>
       <div class="datetime-container">
         <div>
-          <div class="clock-display" id="clock-1">00:00</div>
-          <div class="date-display" id="date-1">Memuat Tanggal...</div>
+          <div id="clock-1">00:00</div>
+          <div id="date-1">Memuat Tanggal...</div>
         </div>
-        <div class="header-controls">
-          <button class="btn-setting btn-timer-cfg" onclick="toggleTimerModal(true)" title="Atur Durasi Tiap Slide">⏱ Waktu Slide</button>
-          <button class="btn-setting" onclick="toggleModal(true)">➕ Tambah Agenda</button>
-        </div>
+        <button class="btn-setting btn-timer-cfg" onclick="toggleTimerModal(true)">⏱ Waktu Slide</button>
+        <button class="btn-setting" onclick="toggleModal(true)">➕ Tambah Agenda</button>
       </div>
     </header>
 
@@ -541,7 +746,7 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
             </tr>
           </thead>
           <tbody id="main-table-body">
-            <tr><td colspan="8" style="text-align: center; color: #94a3b8; padding: 40px;">Menghubungkan ke Database Online Global...</td></tr>
+            <tr><td colspan="8" style="text-align: center; color: #94a3b8;">Menghubungkan ke Database Online Global...</td></tr>
           </tbody>
         </table>
       </div>
@@ -549,23 +754,21 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
   </section>
 
   <!-- ========================================================= -->
-  <!-- SLIDE 2: PROGJA (MONITORING STATUS TUGAS)                 -->
+  <!-- SLIDE 2: PROGJA (ASLI PROGJA.txt)                         -->
   <!-- ========================================================= -->
-  <section class="slide" id="slide-2">
+  <section class="slide" id="slide-progja">
     <header>
       <div class="logo-title">
-        <h1>PROGJA & MONITORING STATUS TUGAS</h1>
+        <h1>MONITORING STATUS TUGAS</h1>
         <p>Sistem Pemantauan Operasional Real-Time</p>
       </div>
       <div class="datetime-container">
         <div>
-          <div class="clock-display" id="clock-2">00:00</div>
-          <div class="date-display" id="date-2">Memuat Tanggal...</div>
+          <div id="clock-2">00:00</div>
+          <div id="date-2">Memuat Tanggal...</div>
         </div>
-        <div class="header-controls">
-          <button class="btn-setting btn-timer-cfg" onclick="toggleTimerModal(true)" title="Atur Durasi Tiap Slide">⏱ Waktu Slide</button>
-          <button class="btn-setting btn-amber" onclick="toggleProgjaModal(true)">＋ Tambah Tugas</button>
-        </div>
+        <button class="btn-setting btn-timer-cfg" onclick="toggleTimerModal(true)">⏱ Waktu Slide</button>
+        <button class="btn-setting" onclick="toggleProgjaModal(true)">＋ Tambah Tugas</button>
       </div>
     </header>
 
@@ -584,11 +787,11 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
               <th class="col-st-sedang">SEDANG</th>
               <th class="col-st-selesai">SELESAI</th>
               <th class="col-ket">KETERANGAN</th>
-              <th class="col-action-p">AKSI</th>
+              <th class="col-action">AKSI</th>
             </tr>
           </thead>
           <tbody id="progja-table-body">
-            <tr><td colspan="11" style="text-align: center; color: #64748b; font-weight: 700; padding: 40px;">Memuat Data Cloud Progja...</td></tr>
+            <tr><td colspan="11" style="text-align: center; color: #64748b; font-weight: 700; padding: 40px;">Memuat Data Cloud...</td></tr>
           </tbody>
         </table>
       </div>
@@ -603,7 +806,7 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
 <div class="modal-overlay" id="settingModal">
   <div class="modal-content">
     <div class="modal-header">
-      <h2>➕ Tambah Agenda Baru (Pengumuman)</h2>
+      <h2>➕ Tambah Agenda Baru</h2>
       <button class="btn-close" onclick="toggleModal(false)">✕</button>
     </div>
 
@@ -662,7 +865,7 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
       </div>
     </div>
 
-    <button class="btn-add" onclick="addNewSchedule()">＋ Simpan Agenda ke Database</button>
+    <button class="btn-add" id="btnAdd" onclick="addNewSchedule()">＋ Simpan ke Database</button>
   </div>
 </div>
 
@@ -714,7 +917,7 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
       <input type="text" id="inputKeterangan" placeholder="Penanggung Jawab / Lokasi">
     </div>
 
-    <button class="btn-add" onclick="addNewTask()">✔ Simpan Tugas Progja</button>
+    <button class="btn-add" onclick="addNewTask()">✔ Simpan Data</button>
   </div>
 </div>
 
@@ -724,12 +927,12 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
 <div class="modal-overlay" id="timerModal">
   <div class="modal-content" style="max-width: 460px; border-color: rgba(56, 189, 248, 0.5);">
     <div class="modal-header">
-      <h2>⏱ Pengaturan Waktu Tampil Slide</h2>
+      <h2>⏱ Pengaturan Waktu Setiap Slide</h2>
       <button class="btn-close" onclick="toggleTimerModal(false)">✕</button>
     </div>
 
-    <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 16px; line-height: 1.4;">
-      Tentukan berapa lama (dalam <b>detik</b>) masing-masing slide ditampilkan sebelum berpindah otomatis.
+    <p style="font-size: 0.95rem; color: #94a3b8; margin-bottom: 14px; line-height: 1.4;">
+      Atur durasi tampil (dalam <b>detik</b>) masing-masing slide sebelum berpindah otomatis.
     </p>
 
     <div class="form-group">
@@ -746,7 +949,7 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
       <label for="autoRotateSelect">Mode Rotasi Otomatis:</label>
       <select id="autoRotateSelect">
         <option value="on">Aktif (Berpindah Otomatis)</option>
-        <option value="off">Nonaktif (Manual / Diam di Slide Ini)</option>
+        <option value="off">Nonaktif (Diam di Slide Aktif)</option>
       </select>
     </div>
 
@@ -754,15 +957,80 @@ table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: l
   </div>
 </div>
 
+<!-- ========================================================= -->
+<!-- MODAL 4: KONFIRMASI HAPUS & NOTIFIKASI KUSTOM             -->
+<!-- ========================================================= -->
+<div class="modal-overlay" id="confirmDeleteModal">
+  <div class="modal-content" style="max-width: 440px; border-color: rgba(239, 68, 68, 0.55);">
+    <div class="modal-header" style="border-bottom-color: rgba(239, 68, 68, 0.3);">
+      <h2 style="color: #f87171;">🗑️ Konfirmasi Penghapusan</h2>
+      <button class="btn-close" onclick="closeConfirmDeleteModal()">✕</button>
+    </div>
+    <p id="confirmDeleteMessage" style="font-size: 1rem; color: #e2e8f0; line-height: 1.5; font-weight: 600;">
+      Apakah Anda yakin ingin menghapus data ini secara permanen?
+    </p>
+    <div class="confirm-actions">
+      <button type="button" class="btn-confirm-cancel" onclick="closeConfirmDeleteModal()">Batal</button>
+      <button type="button" class="btn-confirm-delete" id="btnExecuteDelete">✔ Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="alertMessageModal">
+  <div class="modal-content" style="max-width: 420px; border-color: rgba(245, 158, 11, 0.55);">
+    <div class="modal-header">
+      <h2 style="color: #fbbf24;">⚠️ Peringatan Input</h2>
+      <button class="btn-close" onclick="closeAlertModal()">✕</button>
+    </div>
+    <p id="alertMessageText" style="font-size: 1rem; color: #e2e8f0; line-height: 1.5; font-weight: 600;"></p>
+    <button type="button" class="btn-add" style="margin-top: 18px;" onclick="closeAlertModal()">Mengerti</button>
+  </div>
+</div>
+
 <script>
 /* ==========================================================================
-   BAGIAN 1: PENGATURAN ROTASI & WAKTU SETIAP SLIDE
+   MODAL KONFIRMASI & PESAN KUSTOM (PENGGANTI CONFIRM & ALERT BROWSER)
    ========================================================================== */
-let slideDurations = [15, 15]; // [detik Slide 1, detik Slide 2]
+let pendingDeleteCallback = null;
 let currentSlideIndex = 0;
+let slideDurations = [15, 15];
 let slideRemainingSec = 15;
 let isSlidePaused = false;
 let isAutoRotateEnabled = true;
+
+// Variabel pengontrol auto-scroll Slide 2
+let progjaScrollTimer = null;
+let progjaScrollDirection = 1; // 1 = turun, -1 = naik
+
+function openConfirmDeleteModal(message, onConfirm) {
+  document.getElementById('confirmDeleteMessage').textContent = message;
+  pendingDeleteCallback = onConfirm;
+  document.getElementById('confirmDeleteModal').classList.add('active');
+}
+
+function closeConfirmDeleteModal() {
+  document.getElementById('confirmDeleteModal').classList.remove('active');
+  pendingDeleteCallback = null;
+}
+
+document.getElementById('btnExecuteDelete').addEventListener('click', function() {
+  if (typeof pendingDeleteCallback === 'function') {
+    const fn = pendingDeleteCallback;
+    closeConfirmDeleteModal();
+    fn();
+  } else {
+    closeConfirmDeleteModal();
+  }
+});
+
+function showCustomAlert(message) {
+  document.getElementById('alertMessageText').textContent = message;
+  document.getElementById('alertMessageModal').classList.add('active');
+}
+
+function closeAlertModal() {
+  document.getElementById('alertMessageModal').classList.remove('active');
+}
 
 function loadSlideTimerSettings() {
   try {
@@ -770,10 +1038,7 @@ function loadSlideTimerSettings() {
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed.durations) && parsed.durations.length === 2) {
-        slideDurations = [
-          Math.max(3, parseInt(parsed.durations[0]) || 15),
-          Math.max(3, parseInt(parsed.durations[1]) || 15)
-        ];
+        slideDurations = parsed.durations;
       }
       if (typeof parsed.autoRotate === 'boolean') {
         isAutoRotateEnabled = parsed.autoRotate;
@@ -814,30 +1079,88 @@ function goToSlide(index) {
   currentSlideIndex = index;
   slideRemainingSec = slideDurations[currentSlideIndex];
 
-  const s1 = document.getElementById('slide-1');
-  const s2 = document.getElementById('slide-2');
+  const s1 = document.getElementById('slide-pengumuman');
+  const s2 = document.getElementById('slide-progja');
   const p1 = document.getElementById('pill-slide-1');
   const p2 = document.getElementById('pill-slide-2');
 
-  if (index === 0) {
-    s1.classList.add('active');
-    s2.classList.remove('active');
-    p1.className = 'slide-pill active-s1';
-    p2.className = 'slide-pill';
-    document.getElementById('slideProgressFill').style.background = 'linear-gradient(90deg, #38bdf8, #10b981)';
-  } else {
+  // Reset atau atur ulang auto-scroll saat berpindah slide
+  const tableContainerProgja = s2.querySelector('.table-container');
+  if (index === 1) {
     s1.classList.remove('active');
     s2.classList.add('active');
     p1.className = 'slide-pill';
     p2.className = 'slide-pill active-s2';
     document.getElementById('slideProgressFill').style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
+    
+    // Mulai auto-scroll smooth jika tabel melebihi tinggi container
+    startProgjaAutoScroll();
+  } else {
+    s1.classList.add('active');
+    s2.classList.remove('active');
+    p1.className = 'slide-pill active-s1';
+    p2.className = 'slide-pill';
+    document.getElementById('slideProgressFill').style.background = 'linear-gradient(90deg, #38bdf8, #10b981)';
+    
+    // Hentikan auto-scroll saat di slide 1
+    stopProgjaAutoScroll();
+    if (tableContainerProgja) tableContainerProgja.scrollTop = 0;
   }
 
   updateSlideNavUI();
 }
 
+function startProgjaAutoScroll() {
+  stopProgjaAutoScroll();
+  const tableContainer = document.querySelector('#slide-progja .table-container');
+  if (!tableContainer) return;
+
+  // Cek apakah konten melebihi tinggi kotak tabel
+  if (tableContainer.scrollHeight <= tableContainer.clientHeight) return;
+
+  progjaScrollDirection = 1;
+  progjaScrollTimer = setInterval(() => {
+    const isModalOpen = document.querySelector('.modal-overlay.active') !== null;
+    const isEditing = editingProgjaIndex !== -1;
+    if (isSlidePaused || isModalOpen || isEditing || currentSlideIndex !== 1) return;
+
+    const maxScrollTop = tableContainer.scrollHeight - tableContainer.clientHeight;
+    if (maxScrollTop <= 0) return;
+
+    if (progjaScrollDirection === 1) {
+      if (tableContainer.scrollTop >= maxScrollTop - 5) {
+        // Sampai di bawah, jeda sejenak lalu balik arah ke atas
+        progjaScrollDirection = -1;
+        setTimeout(() => {}, 2000);
+      } else {
+        tableContainer.scrollTop += 1.5; // Kecepatan gulir halus
+      }
+    } else {
+      if (tableContainer.scrollTop <= 5) {
+        // Sampai di atas, jeda sejenak lalu turun kembali
+        progjaScrollDirection = 1;
+        setTimeout(() => {}, 2000);
+      } else {
+        tableContainer.scrollTop -= 1.5;
+      }
+    }
+  }, 40);
+}
+
+function stopProgjaAutoScroll() {
+  if (progjaScrollTimer) {
+    clearInterval(progjaScrollTimer);
+    progjaScrollTimer = null;
+  }
+}
+
 function toggleSlidePause() {
   isSlidePaused = !isSlidePaused;
+  if (isSlidePaused) {
+    stopProgjaAutoScroll();
+  } else if (currentSlideIndex === 1) {
+    startProgjaAutoScroll();
+  }
   updateSlideNavUI();
 }
 
@@ -860,9 +1183,8 @@ function updateSlideNavUI() {
 }
 
 function tickSlideRotation() {
-  // Jangan berpindah slide saat user sedang mengedit baris atau membuka modal
   const isModalOpen = document.querySelector('.modal-overlay.active') !== null;
-  const isEditing = (editingRowIndex !== -1) || (editingProgjaIndex !== -1);
+  const isEditing = (typeof editingRowIndex !== 'undefined' && editingRowIndex !== -1) || (typeof editingProgjaIndex !== 'undefined' && editingProgjaIndex !== -1);
 
   if (isSlidePaused || isModalOpen || isEditing) {
     updateSlideNavUI();
@@ -871,8 +1193,7 @@ function tickSlideRotation() {
 
   slideRemainingSec--;
   if (slideRemainingSec <= 0) {
-    const nextSlide = (currentSlideIndex + 1) % 2;
-    goToSlide(nextSlide);
+    goToSlide((currentSlideIndex + 1) % 2);
   } else {
     updateSlideNavUI();
   }
@@ -896,10 +1217,18 @@ const iconTrash = '<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0
 const iconSave = '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
 
 function requestFullScreenNative() {
-  const elem = document.documentElement;
-  if (elem.requestFullscreen) elem.requestFullscreen();
-  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-  else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+  try {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen().catch(() => {});
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+  } catch (err) {
+    console.log("Fullscreen not permitted or supported:", err);
+  }
 }
 
 function initAudioEngine() {
@@ -926,7 +1255,7 @@ function playTone(freq, type, duration, delay = 0) {
       const gain = audioCtx.createGain();
       osc.type = type;
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -937,7 +1266,7 @@ function playTone(freq, type, duration, delay = 0) {
 }
 
 function playChimeNotification(freqs = [440, 554.37, 659.25]) {
-  freqs.forEach((f, i) => playTone(f, 'sine', 0.7, i * 200));
+  freqs.forEach((f, i) => playTone(f, 'sine', 0.8, i * 250));
 }
 
 function panggilSuaraAI(teks) {
@@ -958,15 +1287,15 @@ function panggilSuaraAI(teks) {
           window.speechSynthesis.cancel();
           const speech = new SpeechSynthesisUtterance(teks);
           speech.lang = 'id-ID';
-          speech.pitch = 1.1;
+          speech.pitch = 1.2;
           window.speechSynthesis.speak(speech);
         }
       });
     } catch (e) { console.error("Gagal memutar audio TTS:", e); }
-  }, 1000);
+  }, 1200);
 }
 
-function updateAllDateTime() {
+function updateDateTime() {
   try {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
@@ -988,7 +1317,7 @@ function updateAllDateTime() {
 /* ==========================================================================
    BAGIAN 3: LOGIKA SLIDE 1 (PENGUMUMAN / JADWAL KEGIATAN)
    ========================================================================== */
-const dbURLPengumuman = "https://api.npoint.io/79fb87bf4e7964927964";
+const dbURL = "https://api.npoint.io/79fb87bf4e7964927964";
 let systemSchedules = [];
 let editingRowIndex = -1;
 let spokenSchedules = new Set();
@@ -1003,35 +1332,36 @@ function generateOptionsHTML(max, selectedVal) {
 }
 
 function initTimePickers() {
-  ['startHour', 'endHour'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = generateOptionsHTML(24, '00');
-  });
-  ['startMinute', 'endMinute'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = generateOptionsHTML(60, '00');
-  });
+  const populateOptions = (selectId, max) => {
+    const sel = document.getElementById(selectId);
+    if (!sel) return;
+    sel.innerHTML = generateOptionsHTML(max, '00');
+  };
+  populateOptions('startHour', 24);
+  populateOptions('startMinute', 60);
+  populateOptions('endHour', 24);
+  populateOptions('endMinute', 60);
 }
 
 async function loadDataFromCloud() {
   if (editingRowIndex !== -1) return;
   try {
-    const response = await fetch(dbURLPengumuman + '?_=' + new Date().getTime());
-    if (!response.ok) return;
-    const data = await response.json();
-    systemSchedules = Array.isArray(data) ? data : [];
+    const response = await fetch(dbURL + '?_=' + new Date().getTime());
+    if (!response.ok) throw new Error("Gagal mengambil data dari server online");
+    systemSchedules = await response.json();
+    if (!Array.isArray(systemSchedules)) systemSchedules = [];
     renderSchedules(false);
-  } catch (e) { console.error("Error mengambil data Pengumuman:", e); }
+  } catch (e) { console.error("Error mengambil data dari cloud:", e); }
 }
 
 async function saveDataToCloud() {
   try {
-    await fetch(dbURLPengumuman, {
+    await fetch(dbURL, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(systemSchedules)
     });
-  } catch (e) { console.error("Gagal menyimpan data Pengumuman:", e); }
+  } catch (e) { console.error("Gagal menyimpan data ke cloud:", e); }
 }
 
 function formatTanggalIndo(dateStr) {
@@ -1047,7 +1377,7 @@ function renderSchedules(shouldSave = true) {
   mainTbody.innerHTML = '';
 
   if (systemSchedules.length === 0) {
-    mainTbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #94a3b8; font-weight: bold; padding: 40px;">Tidak ada agenda kegiatan saat ini. Klik + Tambah Agenda untuk membuat baru.</td></tr>';
+    mainTbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #94a3b8; font-weight: bold;">Tidak ada agenda kegiatan saat ini. Klik + Tambah Agenda untuk membuat baru.</td></tr>';
     if (shouldSave) saveDataToCloud();
     return;
   }
@@ -1108,7 +1438,7 @@ function renderSchedules(shouldSave = true) {
 
       tr.innerHTML = 
         '<td class="col-time">' +
-          '<div style="font-size:0.85rem; color:#cbd5e1; font-weight:normal; margin-bottom:2px;">' + displayTanggal + '</div>' +
+          '<div class="sub-date">' + displayTanggal + '</div>' +
           '<div>' + item.waktu + '</div>' +
         '</td>' +
         '<td class="col-event">' + item.kegiatan + '</td>' +
@@ -1150,7 +1480,7 @@ function saveInlineEdit(index) {
   const lokasi = document.getElementById('edit-lokasi').value.trim();
 
   if (!tglMulai || !tglSelesai || !kegiatan || !lokasi) {
-    return alert("Lengkapi data tanggal, kegiatan, dan lokasi!");
+    return showCustomAlert("Lengkapi data tanggal, kegiatan, dan lokasi!");
   }
 
   const oldItem = systemSchedules[index];
@@ -1170,10 +1500,12 @@ function saveInlineEdit(index) {
 }
 
 function deleteSchedule(index) {
-  if (confirm("Apakah Anda yakin ingin menghapus agenda ini?")) {
+  const item = systemSchedules[index];
+  const label = item ? ('"' + item.kegiatan + '"') : 'agenda ini';
+  openConfirmDeleteModal("Apakah Anda yakin ingin menghapus agenda " + label + "?", function() {
     systemSchedules.splice(index, 1);
     renderSchedules(true);
-  }
+  });
 }
 
 async function addNewSchedule() {
@@ -1191,7 +1523,7 @@ async function addNewSchedule() {
   const lokasi = document.getElementById('inputLokasi').value.trim();
 
   if (!tglMulai || !tglSelesai || !kegiatan || !lokasi) {
-    return alert("Silakan lengkapi tanggal, kegiatan, dan lokasi!");
+    return showCustomAlert("Silakan lengkapi tanggal, kegiatan, dan lokasi!");
   }
 
   systemSchedules.push({ tglMulai, tglSelesai, waktu, kegiatan, pimpinan, personel, gam, lokasi });
@@ -1246,6 +1578,7 @@ function updateStatusBadges() {
           spokenSchedules.add(keySelesai);
           panggilSuaraAI('Informasi, kegiatan ' + eventName + pimpinanText + ' di lokasi ' + roomName + ' telah selesai.');
         }
+
         if (!isNaN(idx) && !indicesToRemove.includes(idx)) indicesToRemove.push(idx);
 
       } else if (waktuSekarangLengkap >= waktuMulaiLengkap && waktuSekarangLengkap <= waktuSelesaiLengkap) {
@@ -1296,9 +1629,13 @@ async function loadProgjaData() {
   try {
     const response = await fetch(dbURLProgja + '?nocache=' + new Date().getTime(), {
       method: 'GET',
-      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' },
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
+      },
       cache: 'no-store'
     });
+
     if (response.ok) {
       const cloudData = await response.json();
       if (Array.isArray(cloudData)) {
@@ -1309,19 +1646,23 @@ async function loadProgjaData() {
         }
       }
     }
-  } catch (e) { console.error("Koneksi cloud Progja terganggu:", e); }
+  } catch (e) { console.error("Koneksi cloud terganggu:", e); }
 }
 
 async function saveProgjaData() {
   if (!isProgjaLoaded && systemTasks.length === 0) return;
   isSavingProgja = true;
   try {
-    await fetch(dbURLProgja, {
+    const response = await fetch(dbURLProgja, {
       method: 'POST',
-      headers: { "Content-Type": "application/json", "Cache-Control": "no-cache, no-store, must-revalidate" },
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      },
       body: JSON.stringify(systemTasks)
     });
-  } catch (e) { console.error("Gagal sinkronisasi Progja ke cloud:", e); }
+    if (!response.ok) console.error("Gagal menyimpan ke npoint. Status:", response.status);
+  } catch (e) { console.error("Gagal sinkronisasi ke cloud:", e); }
   finally {
     setTimeout(() => { isSavingProgja = false; }, 2500);
   }
@@ -1340,7 +1681,7 @@ function renderTasks(triggerSave = true) {
   tbody.innerHTML = '';
 
   if (systemTasks.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; color: #64748b; font-weight: bold; padding: 40px;">Database Progja Kosong. Klik + Tambah Tugas untuk membuat entry baru.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; color: #64748b; font-weight: bold; padding: 40px;">Database Kosong. Klik + Tambah Tugas untuk membuat entry baru.</td></tr>';
     if (triggerSave) saveProgjaData();
     return;
   }
@@ -1367,13 +1708,14 @@ function renderTasks(triggerSave = true) {
         '</td>' +
         '<td colspan="3"><span style="color:#f59e0b; font-weight:bold; font-size:0.85rem;">MENGEDIT...</span></td>' +
         '<td class="col-ket"><input type="text" class="edit-input" id="edit-p-keterangan" value="' + (item.keterangan || '') + '"></td>' +
-        '<td class="col-action-p">' +
+        '<td class="col-action">' +
           '<div class="btn-action-group">' +
             '<button class="btn-icon btn-save" onclick="saveProgjaInlineEdit(' + index + ')" title="Simpan">' + iconSave + '</button>' +
           '</div>' +
         '</td>';
     } else {
       let displayTgl = formatTanggalSimple(item.tgl);
+
       tr.innerHTML = 
         '<td class="col-no">' + (index + 1) + '</td>' +
         '<td class="col-tgl">' + displayTgl + '</td>' +
@@ -1388,27 +1730,27 @@ function renderTasks(triggerSave = true) {
         '<td class="col-jenis" style="font-weight:800; color:' + (item.jenis === 'Rutin' ? '#38bdf8' : '#fbbf24') + ';">' + item.jenis.toUpperCase() + '</td>' +
         '<td class="col-st-akan">' +
           '<label class="chk-container chk-akan">' +
-            '<input type="checkbox" ' + (item.status === 'AKAN' ? 'checked' : '') + ' onchange="changeTaskStatus(' + index + ', \'AKAN\')">' +
+            '<input type="checkbox" ' + (item.status === 'AKAN' ? 'checked' : '') + ' onchange="changeStatus(' + index + ', \'AKAN\')">' +
             '<span class="checkmark"></span>' +
           '</label>' +
         '</td>' +
         '<td class="col-st-sedang">' +
           '<label class="chk-container chk-sedang">' +
-            '<input type="checkbox" ' + (item.status === 'SEDANG' ? 'checked' : '') + ' onchange="changeTaskStatus(' + index + ', \'SEDANG\')">' +
+            '<input type="checkbox" ' + (item.status === 'SEDANG' ? 'checked' : '') + ' onchange="changeStatus(' + index + ', \'SEDANG\')">' +
             '<span class="checkmark"></span>' +
           '</label>' +
         '</td>' +
         '<td class="col-st-selesai">' +
           '<label class="chk-container chk-selesai">' +
-            '<input type="checkbox" ' + (item.status === 'SELESAI' ? 'checked' : '') + ' onchange="changeTaskStatus(' + index + ', \'SELESAI\')">' +
+            '<input type="checkbox" ' + (item.status === 'SELESAI' ? 'checked' : '') + ' onchange="changeStatus(' + index + ', \'SELESAI\')">' +
             '<span class="checkmark"></span>' +
           '</label>' +
         '</td>' +
         '<td class="col-ket">' + (item.keterangan || '-') + '</td>' +
-        '<td class="col-action-p">' +
+        '<td class="col-action">' +
           '<div class="btn-action-group">' +
-            '<button class="btn-icon btn-edit" onclick="enableProgjaInlineEdit(' + index + ')" title="Edit">' + iconPencil + '</button>' +
-            '<button class="btn-icon btn-delete" onclick="deleteTask(' + index + ')" title="Hapus">' + iconTrash + '</button>' +
+            '<button type="button" class="btn-icon btn-edit" onclick="enableProgjaInlineEdit(' + index + ')" title="Edit">' + iconPencil + '</button>' +
+            '<button type="button" class="btn-icon btn-delete" onclick="deleteTask(' + index + ')" title="Hapus">' + iconTrash + '</button>' +
           '</div>' +
         '</td>';
     }
@@ -1418,7 +1760,7 @@ function renderTasks(triggerSave = true) {
   if (triggerSave) saveProgjaData();
 }
 
-function changeTaskStatus(index, newStatus) {
+function changeStatus(index, newStatus) {
   const oldStatus = systemTasks[index].status;
   if (oldStatus === newStatus) {
     systemTasks[index].status = 'AKAN';
@@ -1427,7 +1769,7 @@ function changeTaskStatus(index, newStatus) {
     let statusText = 'akan dikerjakan';
     if (newStatus === 'SEDANG') statusText = 'sedang dikerjakan';
     if (newStatus === 'SELESAI') statusText = 'telah selesai';
-    panggilSuaraAI('Pemberitahuan Progja. Tugas ' + systemTasks[index].tugas + ' ' + statusText);
+    panggilSuaraAI('Pemberitahuan. Tugas ' + systemTasks[index].tugas + ' ' + statusText);
   }
   renderTasks(true);
 }
@@ -1450,7 +1792,7 @@ function saveProgjaInlineEdit(index) {
   const jenis = document.getElementById('edit-p-jenis').value;
   const keterangan = document.getElementById('edit-p-keterangan').value.trim();
 
-  if (!tgl || !tugas) return alert("Tanggal dan Tugas wajib diisi!");
+  if (!tgl || !tugas) return showCustomAlert("Tanggal dan Tugas wajib diisi!");
 
   systemTasks[index] = { ...systemTasks[index], tgl, jam, tugas, isPenting, jenis, keterangan };
   editingProgjaIndex = -1;
@@ -1458,10 +1800,14 @@ function saveProgjaInlineEdit(index) {
 }
 
 function deleteTask(index) {
-  if (confirm("Hapus tugas ini secara permanen dari database Progja?")) {
+  const item = systemTasks[index];
+  const label = item ? ('"' + item.tugas + '"') : 'tugas ini';
+  openConfirmDeleteModal("Hapus tugas " + label + " secara permanen dari database cloud?", function() {
+    isProgjaLoaded = true;
     systemTasks.splice(index, 1);
     renderTasks(true);
-  }
+    setTimeout(startProgjaAutoScroll, 300); // Perbarui auto-scroll setelah data dihapus
+  });
 }
 
 function addNewTask() {
@@ -1472,16 +1818,23 @@ function addNewTask() {
   const jenis = document.getElementById('inputJenis').value;
   const keterangan = document.getElementById('inputKeterangan').value.trim();
 
-  if (!tgl || !tugas) return alert("Isi tanggal dan nama tugas!");
+  if (!tgl || !tugas) return showCustomAlert("Isi tanggal dan nama tugas!");
 
   systemTasks.push({
-    tgl, jam, tugas, isPenting, jenis, status: 'AKAN', keterangan
+    tgl,
+    jam,
+    tugas,
+    isPenting,
+    jenis,
+    status: 'AKAN',
+    keterangan
   });
 
   renderTasks(true);
   document.getElementById('inputTugas').value = '';
   document.getElementById('inputKeterangan').value = '';
   toggleProgjaModal(false);
+  setTimeout(startProgjaAutoScroll, 300); // Perbarui auto-scroll setelah tugas baru ditambah
 }
 
 function toggleProgjaModal(show) {
@@ -1489,7 +1842,7 @@ function toggleProgjaModal(show) {
 }
 
 /* ==========================================================================
-   INISIALISASI GLOBAL & SINKRONISASI INTERVAL
+   INISIALISASI AWAL & INTERVAL
    ========================================================================== */
 document.getElementById('inputTgl').valueAsDate = new Date();
 document.getElementById('inputTglMulai').valueAsDate = new Date();
@@ -1498,18 +1851,16 @@ document.getElementById('inputTglSelesai').valueAsDate = new Date();
 initTimePickers();
 loadSlideTimerSettings();
 
-// Loop Jam & Rotasi Slide setiap 1 detik
 setInterval(() => {
-  updateAllDateTime();
+  updateDateTime();
   tickSlideRotation();
 }, 1000);
-updateAllDateTime();
+updateDateTime();
 
-// Load awal & interval sinkronisasi Cloud masing-masing slide
 loadDataFromCloud();
 loadProgjaData();
 setInterval(loadDataFromCloud, 5000);
-setInterval(loadProgjaData, 4000);
+setInterval(loadProgjaData, 3000);
 
 // Navigasi keyboard (Panah Kiri/Kanan untuk ganti slide manual)
 document.addEventListener('keydown', (e) => {
