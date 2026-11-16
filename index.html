@@ -2,16 +2,14 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<!-- Viewport fit untuk TV Kiosk / Display -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Display Jadwal Kegiatan Online Synchronized - Cyber DengXian</title>
+<title>Display Jadwal & Monitoring Tugas Terpadu - SLOG KORPASGAT</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-/* Deklarasi Font DengXian */
 @font-face {
   font-family: 'DengXian';
   src: local('DengXian'), local('DengXian Regular'), local('Microsoft YaHei'), local('SimHei'), sans-serif;
@@ -28,36 +26,73 @@
 
 * {
   margin: 0; padding: 0; box-sizing: border-box;
-  font-family: 'DengXian', 'Microsoft YaHei', 'SimHei', sans-serif;
+  font-family: 'DengXian', 'Plus Jakarta Sans', 'Microsoft YaHei', sans-serif;
 }
 
-/* Tampilan Layar Utama TV Kiosk */
 html, body {
-  width: 100%;
-  height: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
-  background: radial-gradient(circle at 10% 20%, #080d1a 0%, #020617 90%);
-  color: #f8fafc;
+  width: 100%; height: 100%; height: 100vh; height: 100dvh;
+  overflow: hidden; background: #020617; color: #f8fafc;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  display: flex; flex-direction: column; position: relative;
 }
 
-body::before {
+/* SLIDE CONTAINER ARCHITECTURE */
+.slide-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+  transform: scale(0.99);
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1);
+  z-index: 2;
+}
+
+/* SLIDE 1 THEME (CYBER DENGXIAN - PENGUMUMAN) */
+#slide-1 {
+  background: radial-gradient(circle at 10% 20%, #080d1a 0%, #020617 90%);
+}
+#slide-1::before {
   content: ''; position: absolute; top: -10%; left: -10%; width: 40%; height: 40%;
   background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(0,0,0,0) 70%); pointer-events: none;
 }
-
-body::after {
+#slide-1::after {
   content: ''; position: absolute; bottom: -10%; right: -10%; width: 40%; height: 40%;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(0,0,0,0) 70%); pointer-events: none;
 }
 
+/* SLIDE 2 THEME (TACTICAL AMBER - PROGJA) */
+#slide-2 {
+  background: #05070a;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+}
+#slide-2 * {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* SHARED & SPECIFIC HEADERS */
 header {
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -67,38 +102,71 @@ header {
   flex-shrink: 0;
 }
 
+#slide-2 header {
+  background: rgba(13, 17, 23, 0.9);
+  border-bottom: 2px solid rgba(245, 158, 11, 0.35);
+}
+
 .logo-title h1 {
-  font-size: 2.2rem; font-weight: 800; letter-spacing: 1.5px;
+  font-size: 2rem; font-weight: 800; letter-spacing: 1.5px;
   color: #38bdf8;
   text-shadow: 0 0 15px rgba(56, 189, 248, 0.6), 0 0 30px rgba(56, 189, 248, 0.3);
   text-transform: uppercase;
 }
 
+#slide-2 .logo-title h1 {
+  font-size: 1.9rem; font-weight: 900;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
 .logo-title p {
-  color: #94a3b8; font-size: 1rem; margin-top: 3px; font-weight: 700;
+  color: #94a3b8; font-size: 0.95rem; margin-top: 3px; font-weight: 700;
+}
+
+#slide-2 .logo-title p {
+  color: #64748b; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;
 }
 
 .datetime-container {
   text-align: right; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(10px);
-  padding: 10px 22px; border-radius: 16px; border: 1px solid rgba(56, 189, 248, 0.3);
-  display: flex; align-items: center; gap: 15px;
+  padding: 8px 18px; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.3);
+  display: flex; align-items: center; gap: 12px;
   box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
-#clock {
-  font-family: 'JetBrains Mono', 'DengXian', monospace; font-size: 2.4rem; font-weight: 800;
+#slide-2 .datetime-container {
+  background: rgba(22, 27, 34, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.clock-display {
+  font-family: 'JetBrains Mono', monospace !important; font-size: 2.2rem; font-weight: 800;
   color: #38bdf8; text-shadow: 0 0 15px rgba(56, 189, 248, 0.8); line-height: 1;
 }
 
-#date {
-  font-size: 1rem; color: #f1f5f9; margin-top: 4px; font-weight: 700;
+#slide-2 .clock-display {
+  color: #f59e0b; text-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+.date-display {
+  font-size: 0.9rem; color: #f1f5f9; margin-top: 4px; font-weight: 700;
+}
+
+#slide-2 .date-display {
+  color: #94a3b8; font-size: 0.85rem;
+}
+
+.header-controls {
+  display: flex; align-items: center; gap: 8px;
 }
 
 .btn-setting {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: #f8fafc;
-  border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 18px; border-radius: 12px;
-  cursor: pointer; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 14px; border-radius: 10px;
+  cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.25s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 6px;
 }
 
 .btn-setting:hover {
@@ -106,105 +174,163 @@ header {
   transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
 }
 
+.btn-amber {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  border-color: #f59e0b;
+}
+.btn-amber:hover {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+
+.btn-timer-cfg {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+}
+.btn-timer-cfg:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+}
+
+/* SLIDE INDICATOR & PROGRESS BAR */
+.slide-nav-bar {
+  position: fixed;
+  bottom: 14px;
+  right: 28px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+}
+
+.slide-pill {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #94a3b8;
+  transition: all 0.25s;
+}
+
+.slide-pill.active-s1 {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+
+.slide-pill.active-s2 {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border-color: #f59e0b;
+}
+
+.timer-badge {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #cbd5e1;
+  padding: 4px 10px;
+  background: rgba(30, 41, 59, 0.9);
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-pause-slide {
+  background: none;
+  border: none;
+  color: #f8fafc;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.btn-pause-slide:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.top-progress-track {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  z-index: 999;
+}
+.top-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8, #10b981);
+  transition: width 0.25s linear;
+}
+
+/* MAIN AREA & TABLES */
 main { 
-  flex: 1; 
-  padding: 20px 30px; 
-  display: flex; 
-  flex-direction: column; 
-  z-index: 1; 
-  overflow: hidden; 
-  height: calc(100% - 90px);
+  flex: 1; padding: 20px 30px 55px 30px; display: flex; flex-direction: column; 
+  z-index: 1; overflow: hidden; height: calc(100% - 85px);
 }
 
 .table-container {
-  width: 100%; 
-  height: 100%;
-  background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px);
-  border-radius: 20px; overflow-y: auto; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px);
+  border-radius: 18px; overflow-y: auto; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#slide-2 .table-container {
+  background: rgba(13, 17, 23, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; }
 
-th {
+/* SLIDE 1 TABLE STYLES */
+#slide-1 th {
   position: sticky; top: 0; z-index: 5;
-  background: #0f172a; color: #38bdf8; font-size: 1.1rem; font-weight: 800;
-  padding: 18px 16px; text-transform: uppercase; letter-spacing: 1px;
+  background: #0f172a; color: #38bdf8; font-size: 1.05rem; font-weight: 800;
+  padding: 16px 14px; text-transform: uppercase; letter-spacing: 1px;
   border-bottom: 3px solid rgba(56, 189, 248, 0.4);
   text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
 }
-
-td {
-  padding: 16px 16px; font-size: 1.1rem; color: #f8fafc;
+#slide-1 td {
+  padding: 14px 14px; font-size: 1.05rem; color: #f8fafc;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08); vertical-align: middle; transition: background 0.2s;
 }
+#slide-1 tr:hover td { background: rgba(51, 65, 85, 0.4); }
 
-tr:hover td { background: rgba(51, 65, 85, 0.4); }
-
-/* TEKS MENYALA & HIGH CONTRAST */
-.col-time { 
-  font-weight: 800; 
-  color: #facc15; 
-  font-family: 'JetBrains Mono', 'DengXian', monospace; 
-  width: 16%; 
-  text-shadow: 0 0 12px rgba(250, 204, 21, 0.6); 
-}
-
-.col-event { 
-  font-weight: 800; 
-  color: #ffffff; 
-  width: 18%; 
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
-}
-
-.col-leader { 
-  color: #e081ff; 
-  font-weight: 800; 
-  width: 14%; 
-  text-shadow: 0 0 12px rgba(224, 129, 255, 0.6); 
-}
-
-.col-personnel { 
-  color: #38bdf8; 
-  font-weight: 800; 
-  width: 13%; 
-  text-shadow: 0 0 12px rgba(56, 189, 248, 0.6); 
-}
-
-.col-gam { 
-  color: #f472b6; 
-  font-weight: 800; 
-  width: 10%; 
-  text-shadow: 0 0 12px rgba(244, 114, 182, 0.6); 
-}
-
-.col-room { 
-  color: #4ade80; 
-  font-weight: 800; 
-  width: 11%; 
-  text-shadow: 0 0 12px rgba(74, 222, 128, 0.6); 
-}
-
+.col-time { font-weight: 800; color: #facc15; font-family: 'JetBrains Mono', monospace; width: 16%; text-shadow: 0 0 12px rgba(250, 204, 21, 0.6); }
+.col-event { font-weight: 800; color: #ffffff; width: 18%; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+.col-leader { color: #e081ff; font-weight: 800; width: 14%; text-shadow: 0 0 12px rgba(224, 129, 255, 0.6); }
+.col-personnel { color: #38bdf8; font-weight: 800; width: 13%; text-shadow: 0 0 12px rgba(56, 189, 248, 0.6); }
+.col-gam { color: #f472b6; font-weight: 800; width: 10%; text-shadow: 0 0 12px rgba(244, 114, 182, 0.6); }
+.col-room { color: #4ade80; font-weight: 800; width: 11%; text-shadow: 0 0 12px rgba(74, 222, 128, 0.6); }
 .col-status { text-align: center; width: 9%; }
 .col-action { text-align: center; width: 9%; }
 
-/* BADGE STATUS MENYALA */
 .status-badge {
-  display: inline-block; padding: 8px 14px; border-radius: 20px; font-size: 0.95rem;
+  display: inline-block; padding: 7px 12px; border-radius: 20px; font-size: 0.9rem;
   font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing: 0.5px;
 }
-
 .status-ongoing {
   background: rgba(59, 130, 246, 0.25); color: #60a5fa;
   border: 1px solid #60a5fa; box-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
   animation: pulse-glow 2s infinite;
 }
-
 .status-waiting { 
   background: rgba(245, 158, 11, 0.25); color: #fbbf24; 
   border: 1px solid #fbbf24; box-shadow: 0 0 12px rgba(251, 191, 36, 0.5); 
 }
-
 .status-done { 
   background: rgba(16, 185, 129, 0.25); color: #34d399; 
   border: 1px solid #34d399; box-shadow: 0 0 12px rgba(52, 211, 153, 0.5); 
@@ -216,15 +342,73 @@ tr:hover td { background: rgba(51, 65, 85, 0.4); }
   100% { box-shadow: 0 0 10px rgba(96, 165, 250, 0.5); }
 }
 
-.btn-action-group { display: flex; gap: 8px; justify-content: center; align-items: center; }
+/* SLIDE 2 TABLE STYLES (PROGJA) */
+#slide-2 th {
+  position: sticky; top: 0; z-index: 5; 
+  background: #0d1117; color: #94a3b8;
+  font-size: 0.8rem; font-weight: 800; padding: 16px 10px; 
+  letter-spacing: 1.5px; text-transform: uppercase;
+  border-bottom: 2px solid rgba(245, 158, 11, 0.4); text-align: center;
+}
+#slide-2 td {
+  padding: 14px 10px; font-size: 0.95rem; color: #e2e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04); 
+  vertical-align: middle; text-align: center;
+  transition: background 0.2s;
+}
+#slide-2 tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.01); }
+#slide-2 tr:hover td { background: rgba(245, 158, 11, 0.04); }
 
-.btn-icon {
-  background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px; width: 38px; height: 38px; display: flex; justify-content: center; align-items: center;
-  cursor: pointer; transition: all 0.2s; color: #f8fafc; fill: currentColor;
+.col-no { width: 4%; font-weight: 800; color: #475569; font-family: 'JetBrains Mono', monospace; }
+.col-tgl { width: 8%; font-weight: 700; color: #cbd5e1; font-family: 'JetBrains Mono', monospace; }
+.col-jam { width: 8%; font-weight: 700; color: #f59e0b; font-family: 'JetBrains Mono', monospace; }
+.col-tugas { width: 23%; font-weight: 800; color: #ffffff; text-align: left !important; letter-spacing: 0.3px; }
+.col-penting { width: 8%; }
+.col-jenis { width: 10%; font-size: 0.85rem; letter-spacing: 0.5px; }
+.col-st-akan { width: 9%; }
+.col-st-sedang { width: 9%; }
+.col-st-selesai { width: 9%; }
+.col-ket { width: 13%; text-align: left !important; color: #94a3b8; font-weight: 600; font-size: 0.9rem; }
+.col-action-p { width: 6%; }
+
+/* CHECKBOXES PROGJA */
+.chk-container {
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; user-select: none;
+}
+.chk-container input { display: none; }
+.checkmark {
+  width: 24px; height: 24px; border-radius: 6px;
+  border: 2px solid #334155; background: #090d16;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s;
+}
+.chk-container:hover .checkmark { border-color: #64748b; }
+.checkmark:after {
+  content: ""; display: none; width: 5px; height: 10px;
+  border: solid white; border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg); margin-bottom: 2px;
+}
+.chk-container input:checked + .checkmark:after { display: block; }
+.chk-penting input:checked + .checkmark { background: #dc2626; border-color: #ef4444; box-shadow: 0 0 12px rgba(220, 38, 38, 0.7); }
+.chk-akan input:checked + .checkmark { background: #d97706; border-color: #f59e0b; box-shadow: 0 0 12px rgba(217, 119, 6, 0.7); }
+.chk-sedang input:checked + .checkmark { background: #2563eb; border-color: #3b82f6; box-shadow: 0 0 15px rgba(37, 99, 235, 0.8); animation: pulse-glow-blue 2s infinite; }
+.chk-selesai input:checked + .checkmark { background: #059669; border-color: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.7); }
+
+@keyframes pulse-glow-blue {
+  0% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.4); }
+  50% { box-shadow: 0 0 18px rgba(59, 130, 246, 0.9); }
+  100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.4); }
 }
 
-.btn-icon svg { width: 20px; height: 20px; }
+/* ACTION BUTTONS & INPUTS */
+.btn-action-group { display: flex; gap: 6px; justify-content: center; align-items: center; }
+.btn-icon {
+  background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px; width: 34px; height: 34px; display: flex; justify-content: center; align-items: center;
+  cursor: pointer; transition: all 0.2s; color: #f8fafc; fill: currentColor;
+}
+.btn-icon svg { width: 17px; height: 17px; }
 .btn-edit:hover { background: #f59e0b; border-color: #fbbf24; transform: scale(1.08); }
 .btn-delete:hover { background: #ef4444; border-color: #f87171; transform: scale(1.08); }
 .btn-save { background: #10b981; border-color: #34d399; }
@@ -236,31 +420,32 @@ tr:hover td { background: rgba(51, 65, 85, 0.4); }
 }
 .edit-time-container { display: flex; flex-direction: column; gap: 4px; }
 .edit-time-group { display: flex; align-items: center; gap: 2px; }
-.edit-select { padding: 4px 2px; font-family: 'JetBrains Mono', 'DengXian', monospace; }
+.edit-select { padding: 4px 2px; font-family: 'JetBrains Mono', monospace; }
 
-/* MODAL PANEL */
+/* MODALS */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(2, 6, 23, 0.85);
   backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center;
-  z-index: 1000; opacity: 0; pointer-events: none; transition: all 0.3s ease;
+  z-index: 2000; opacity: 0; pointer-events: none; transition: all 0.3s ease;
 }
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
 .modal-content {
-  background: #0f172a; width: 90%; max-width: 600px;
-  border-radius: 24px; border: 1px solid rgba(56, 189, 248, 0.3); padding: 25px;
-  display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+  background: #0f172a; width: 90%; max-width: 560px;
+  border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.35); padding: 25px;
+  display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
 }
 
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
-.modal-header h2 { font-size: 1.4rem; color: #38bdf8; font-weight: 800; }
-.btn-close { background: none; border: none; color: #94a3b8; font-size: 1.6rem; cursor: pointer; }
+.modal-header h2 { font-size: 1.3rem; color: #38bdf8; font-weight: 800; }
+.btn-close { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
+.btn-close:hover { color: #ffffff; }
 
-.form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
-.form-group label { font-size: 0.85rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; text-align: left; }
+.form-group label { font-size: 0.8rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-.form-group input, .time-picker-select {
+.form-group input, .form-group select, .time-picker-select {
   background-color: #1e293b; border: 1px solid #334155; color: #f8fafc;
   padding: 10px 12px; border-radius: 8px; font-size: 0.95rem; width: 100%; color-scheme: dark; font-weight: 700;
 }
@@ -272,14 +457,14 @@ tr:hover td { background: rgba(51, 65, 85, 0.4); }
 
 .time-picker-select {
   border: none; background: transparent; padding: 4px 2px;
-  text-align: center; font-family: 'JetBrains Mono', 'DengXian', monospace; font-weight: 800;
+  text-align: center; font-family: 'JetBrains Mono', monospace; font-weight: 800;
   color: #38bdf8; font-size: 1rem; cursor: pointer;
 }
 
 .btn-add {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none;
-  padding: 14px; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%;
-  font-size: 1.1rem; margin-top: 10px; transition: all 0.2s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  padding: 13px; border-radius: 10px; font-weight: 800; cursor: pointer; width: 100%;
+  font-size: 1rem; margin-top: 8px; transition: all 0.2s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
 }
 .btn-add:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
 
@@ -293,54 +478,132 @@ tr:hover td { background: rgba(51, 65, 85, 0.4); }
 </head>
 <body>
 
+<!-- OVERLAY UNLOCK AUDIO & FULLSCREEN TV -->
 <div id="tizenAudioUnlocker">
-  <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: #38bdf8; font-weight: 800; text-shadow: 0 0 15px rgba(56,189,248,0.5);">SISTEM MONITORING JADWAL</h1>
-  <p style="font-size: 1.2rem; margin-bottom: 30px; color: #94a3b8; max-width: 500px; font-weight: bold;">Tekan tombol OK / Enter pada remote TV untuk mengaktifkan audio otomatis & Fullscreen.</p>
+  <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: #38bdf8; font-weight: 800; text-shadow: 0 0 15px rgba(56,189,248,0.5);">SISTEM MONITORING TERPADU</h1>
+  <p style="font-size: 1.2rem; margin-bottom: 30px; color: #94a3b8; max-width: 540px; font-weight: bold;">Tekan tombol OK / Enter pada remote TV untuk mengaktifkan suara otomatis, rotasi slide, & Fullscreen.</p>
   <button id="btnUnlockTizen" onclick="bukaKunciAudioTizen()" style="padding: 18px 40px; font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 10px 30px rgba(16,185,129,0.5);" autofocus>
-    🔊 TEKAN UNTUK AKTIFKAN SUARA
+    🔊 TEKAN UNTUK AKTIFKAN DISPLAY
   </button>
 </div>
 
-<header>
-  <div class="logo-title">
-    <h1>JADWAL KEGIATAN & AGENDA UTAMA SLOG KORPASGAT</h1>
-    <p>Monitoring Waktu, Pimpinan Rapat, dan Lokasi Ruangan</p>
-  </div>
-  <div class="datetime-container">
-    <div>
-      <div id="clock">00:00</div>
-      <div id="date">Memuat Tanggal...</div>
-    </div>
-    <button class="btn-setting" onclick="toggleModal(true)">➕ Tambah Agenda</button>
-  </div>
-</header>
+<!-- PROGRESS BAR PERPINDAHAN SLIDE -->
+<div class="top-progress-track">
+  <div class="top-progress-fill" id="slideProgressFill"></div>
+</div>
 
-<main>
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th class="col-time">Tanggal & Waktu</th>
-          <th class="col-event">Nama Kegiatan</th>
-          <th class="col-leader">Pimpinan</th>
-          <th class="col-personnel">Personel</th>
-          <th class="col-gam">GAM</th>
-          <th class="col-room">Lokasi</th>
-          <th class="col-status">Status</th>
-          <th class="col-action">Aksi</th>
-        </tr>
-      </thead>
-      <tbody id="main-table-body">
-        <tr><td colspan="8" style="text-align: center; color: #94a3b8;">Menghubungkan ke Database Online Global...</td></tr>
-      </tbody>
-    </table>
+<!-- NAVIGASI SLIDE & INDIKATOR WAKTU -->
+<div class="slide-nav-bar">
+  <button class="slide-pill active-s1" id="pill-slide-1" onclick="goToSlide(0)">1. PENGUMUMAN</button>
+  <button class="slide-pill" id="pill-slide-2" onclick="goToSlide(1)">2. PROGJA</button>
+  <div class="timer-badge">
+    <span id="slideCountdownText">15s</span>
+    <button class="btn-pause-slide" id="btnPauseSlide" onclick="toggleSlidePause()" title="Jeda / Lanjutkan Rotasi">⏸</button>
   </div>
-</main>
+</div>
 
+<div class="slide-wrapper">
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 1: PENGUMUMAN (JADWAL KEGIATAN & AGENDA UTAMA)      -->
+  <!-- ========================================================= -->
+  <section class="slide active" id="slide-1">
+    <header>
+      <div class="logo-title">
+        <h1>JADWAL KEGIATAN & AGENDA UTAMA SLOG KORPASGAT</h1>
+        <p>Monitoring Waktu, Pimpinan Rapat, dan Lokasi Ruangan</p>
+      </div>
+      <div class="datetime-container">
+        <div>
+          <div class="clock-display" id="clock-1">00:00</div>
+          <div class="date-display" id="date-1">Memuat Tanggal...</div>
+        </div>
+        <div class="header-controls">
+          <button class="btn-setting btn-timer-cfg" onclick="toggleTimerModal(true)" title="Atur Durasi Tiap Slide">⏱ Waktu Slide</button>
+          <button class="btn-setting" onclick="toggleModal(true)">➕ Tambah Agenda</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-time">Tanggal & Waktu</th>
+              <th class="col-event">Nama Kegiatan</th>
+              <th class="col-leader">Pimpinan</th>
+              <th class="col-personnel">Personel</th>
+              <th class="col-gam">GAM</th>
+              <th class="col-room">Lokasi</th>
+              <th class="col-status">Status</th>
+              <th class="col-action">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="main-table-body">
+            <tr><td colspan="8" style="text-align: center; color: #94a3b8; padding: 40px;">Menghubungkan ke Database Online Global...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 2: PROGJA (MONITORING STATUS TUGAS)                 -->
+  <!-- ========================================================= -->
+  <section class="slide" id="slide-2">
+    <header>
+      <div class="logo-title">
+        <h1>PROGJA & MONITORING STATUS TUGAS</h1>
+        <p>Sistem Pemantauan Operasional Real-Time</p>
+      </div>
+      <div class="datetime-container">
+        <div>
+          <div class="clock-display" id="clock-2">00:00</div>
+          <div class="date-display" id="date-2">Memuat Tanggal...</div>
+        </div>
+        <div class="header-controls">
+          <button class="btn-setting btn-timer-cfg" onclick="toggleTimerModal(true)" title="Atur Durasi Tiap Slide">⏱ Waktu Slide</button>
+          <button class="btn-setting btn-amber" onclick="toggleProgjaModal(true)">＋ Tambah Tugas</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-no">NO</th>
+              <th class="col-tgl">TGL</th>
+              <th class="col-jam">JAM</th>
+              <th class="col-tugas">TUGAS</th>
+              <th class="col-penting">PENTING</th>
+              <th class="col-jenis">KATEGORI</th>
+              <th class="col-st-akan">AKAN</th>
+              <th class="col-st-sedang">SEDANG</th>
+              <th class="col-st-selesai">SELESAI</th>
+              <th class="col-ket">KETERANGAN</th>
+              <th class="col-action-p">AKSI</th>
+            </tr>
+          </thead>
+          <tbody id="progja-table-body">
+            <tr><td colspan="11" style="text-align: center; color: #64748b; font-weight: 700; padding: 40px;">Memuat Data Cloud Progja...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </section>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- MODAL 1: TAMBAH AGENDA PENGUMUMAN                         -->
+<!-- ========================================================= -->
 <div class="modal-overlay" id="settingModal">
   <div class="modal-content">
     <div class="modal-header">
-      <h2>➕ Tambah Agenda Baru</h2>
+      <h2>➕ Tambah Agenda Baru (Pengumuman)</h2>
       <button class="btn-close" onclick="toggleModal(false)">✕</button>
     </div>
 
@@ -399,55 +662,244 @@ tr:hover td { background: rgba(51, 65, 85, 0.4); }
       </div>
     </div>
 
-    <button class="btn-add" id="btnAdd" onclick="addNewSchedule()">＋ Simpan ke Database</button>
+    <button class="btn-add" onclick="addNewSchedule()">＋ Simpan Agenda ke Database</button>
+  </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- MODAL 2: TAMBAH TUGAS PROGJA                              -->
+<!-- ========================================================= -->
+<div class="modal-overlay" id="progjaModal">
+  <div class="modal-content" style="border-color: rgba(245, 158, 11, 0.45);">
+    <div class="modal-header">
+      <h2 style="color: #f59e0b;">＋ Tambah Tugas Baru (Progja)</h2>
+      <button class="btn-close" onclick="toggleProgjaModal(false)">✕</button>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="inputTgl">Tanggal:</label>
+        <input type="date" id="inputTgl">
+      </div>
+      <div class="form-group">
+        <label for="inputJam">Jam (HH:MM):</label>
+        <input type="time" id="inputJam" value="08:00">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputTugas">Rincian Tugas:</label>
+      <input type="text" id="inputTugas" placeholder="Masukkan deskripsi tugas">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="inputPenting">Prioritas:</label>
+        <select id="inputPenting">
+          <option value="tidak">Biasa</option>
+          <option value="ya">Penting</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inputJenis">Kategori Tugas:</label>
+        <select id="inputJenis">
+          <option value="Rutin">Rutin</option>
+          <option value="Tambahan">Tambahan</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputKeterangan">Keterangan Tambahan:</label>
+      <input type="text" id="inputKeterangan" placeholder="Penanggung Jawab / Lokasi">
+    </div>
+
+    <button class="btn-add" onclick="addNewTask()">✔ Simpan Tugas Progja</button>
+  </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- MODAL 3: PENGATURAN WAKTU SETIAP SLIDE                    -->
+<!-- ========================================================= -->
+<div class="modal-overlay" id="timerModal">
+  <div class="modal-content" style="max-width: 460px; border-color: rgba(56, 189, 248, 0.5);">
+    <div class="modal-header">
+      <h2>⏱ Pengaturan Waktu Tampil Slide</h2>
+      <button class="btn-close" onclick="toggleTimerModal(false)">✕</button>
+    </div>
+
+    <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 16px; line-height: 1.4;">
+      Tentukan berapa lama (dalam <b>detik</b>) masing-masing slide ditampilkan sebelum berpindah otomatis.
+    </p>
+
+    <div class="form-group">
+      <label for="durationSlide1">Durasi Slide 1 — PENGUMUMAN (Detik):</label>
+      <input type="number" id="durationSlide1" min="3" max="3600" value="15">
+    </div>
+
+    <div class="form-group">
+      <label for="durationSlide2">Durasi Slide 2 — PROGJA (Detik):</label>
+      <input type="number" id="durationSlide2" min="3" max="3600" value="15">
+    </div>
+
+    <div class="form-group">
+      <label for="autoRotateSelect">Mode Rotasi Otomatis:</label>
+      <select id="autoRotateSelect">
+        <option value="on">Aktif (Berpindah Otomatis)</option>
+        <option value="off">Nonaktif (Manual / Diam di Slide Ini)</option>
+      </select>
+    </div>
+
+    <button class="btn-add" onclick="saveSlideTimerSettings()">💾 Simpan Pengaturan Waktu</button>
   </div>
 </div>
 
 <script>
-const dbURL = "https://api.npoint.io/79fb87bf4e7964927964";
+/* ==========================================================================
+   BAGIAN 1: PENGATURAN ROTASI & WAKTU SETIAP SLIDE
+   ========================================================================== */
+let slideDurations = [15, 15]; // [detik Slide 1, detik Slide 2]
+let currentSlideIndex = 0;
+let slideRemainingSec = 15;
+let isSlidePaused = false;
+let isAutoRotateEnabled = true;
 
-let systemSchedules = [];
-let currentHours = "00";
-let currentMinutes = "00";
-let editingRowIndex = -1;
-let spokenSchedules = new Set();
+function loadSlideTimerSettings() {
+  try {
+    const saved = localStorage.getItem('slog_slide_timer_cfg');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed.durations) && parsed.durations.length === 2) {
+        slideDurations = [
+          Math.max(3, parseInt(parsed.durations[0]) || 15),
+          Math.max(3, parseInt(parsed.durations[1]) || 15)
+        ];
+      }
+      if (typeof parsed.autoRotate === 'boolean') {
+        isAutoRotateEnabled = parsed.autoRotate;
+        isSlidePaused = !isAutoRotateEnabled;
+      }
+    }
+  } catch (e) { console.error(e); }
+
+  document.getElementById('durationSlide1').value = slideDurations[0];
+  document.getElementById('durationSlide2').value = slideDurations[1];
+  document.getElementById('autoRotateSelect').value = isAutoRotateEnabled ? 'on' : 'off';
+  slideRemainingSec = slideDurations[currentSlideIndex];
+  updateSlideNavUI();
+}
+
+function saveSlideTimerSettings() {
+  const d1 = Math.max(3, parseInt(document.getElementById('durationSlide1').value) || 15);
+  const d2 = Math.max(3, parseInt(document.getElementById('durationSlide2').value) || 15);
+  const autoMode = document.getElementById('autoRotateSelect').value === 'on';
+
+  slideDurations = [d1, d2];
+  isAutoRotateEnabled = autoMode;
+  isSlidePaused = !autoMode;
+  slideRemainingSec = slideDurations[currentSlideIndex];
+
+  try {
+    localStorage.setItem('slog_slide_timer_cfg', JSON.stringify({
+      durations: slideDurations,
+      autoRotate: isAutoRotateEnabled
+    }));
+  } catch (e) { console.error(e); }
+
+  updateSlideNavUI();
+  toggleTimerModal(false);
+}
+
+function goToSlide(index) {
+  currentSlideIndex = index;
+  slideRemainingSec = slideDurations[currentSlideIndex];
+
+  const s1 = document.getElementById('slide-1');
+  const s2 = document.getElementById('slide-2');
+  const p1 = document.getElementById('pill-slide-1');
+  const p2 = document.getElementById('pill-slide-2');
+
+  if (index === 0) {
+    s1.classList.add('active');
+    s2.classList.remove('active');
+    p1.className = 'slide-pill active-s1';
+    p2.className = 'slide-pill';
+    document.getElementById('slideProgressFill').style.background = 'linear-gradient(90deg, #38bdf8, #10b981)';
+  } else {
+    s1.classList.remove('active');
+    s2.classList.add('active');
+    p1.className = 'slide-pill';
+    p2.className = 'slide-pill active-s2';
+    document.getElementById('slideProgressFill').style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
+  }
+
+  updateSlideNavUI();
+}
+
+function toggleSlidePause() {
+  isSlidePaused = !isSlidePaused;
+  updateSlideNavUI();
+}
+
+function updateSlideNavUI() {
+  const countdownEl = document.getElementById('slideCountdownText');
+  const pauseBtn = document.getElementById('btnPauseSlide');
+  const progressEl = document.getElementById('slideProgressFill');
+
+  const total = slideDurations[currentSlideIndex];
+  const pct = Math.max(0, Math.min(100, ((total - slideRemainingSec) / total) * 100));
+
+  if (isSlidePaused) {
+    countdownEl.textContent = 'JEDA';
+    pauseBtn.textContent = '▶';
+  } else {
+    countdownEl.textContent = slideRemainingSec + 's';
+    pauseBtn.textContent = '⏸';
+  }
+  progressEl.style.width = pct + '%';
+}
+
+function tickSlideRotation() {
+  // Jangan berpindah slide saat user sedang mengedit baris atau membuka modal
+  const isModalOpen = document.querySelector('.modal-overlay.active') !== null;
+  const isEditing = (editingRowIndex !== -1) || (editingProgjaIndex !== -1);
+
+  if (isSlidePaused || isModalOpen || isEditing) {
+    updateSlideNavUI();
+    return;
+  }
+
+  slideRemainingSec--;
+  if (slideRemainingSec <= 0) {
+    const nextSlide = (currentSlideIndex + 1) % 2;
+    goToSlide(nextSlide);
+  } else {
+    updateSlideNavUI();
+  }
+}
+
+function toggleTimerModal(show) {
+  if (show) {
+    document.getElementById('durationSlide1').value = slideDurations[0];
+    document.getElementById('durationSlide2').value = slideDurations[1];
+    document.getElementById('autoRotateSelect').value = isAutoRotateEnabled ? 'on' : 'off';
+  }
+  document.getElementById('timerModal').classList.toggle('active', show);
+}
+
+/* ==========================================================================
+   BAGIAN 2: AUDIO ENGINE & JAM REAL-TIME
+   ========================================================================== */
 let audioCtx = null;
-
 const iconPencil = '<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
 const iconTrash = '<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
 const iconSave = '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
 
 function requestFullScreenNative() {
   const elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) {
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) {
-    elem.msRequestFullscreen();
-  }
-}
-
-function generateOptionsHTML(max, selectedVal) {
-  let html = '';
-  for (let i = 0; i < max; i++) {
-    const val = String(i).padStart(2, '0');
-    html += '<option value="' + val + '" ' + (val === selectedVal ? 'selected' : '') + '>' + val + '</option>';
-  }
-  return html;
-}
-
-function initTimePickers() {
-  const populateOptions = (selectId, max) => {
-    const sel = document.getElementById(selectId);
-    if(!sel) return;
-    sel.innerHTML = generateOptionsHTML(max, '00');
-  };
-
-  populateOptions('startHour', 24);
-  populateOptions('startMinute', 60);
-  populateOptions('endHour', 24);
-  populateOptions('endMinute', 60);
+  if (elem.requestFullscreen) elem.requestFullscreen();
+  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+  else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
 }
 
 function initAudioEngine() {
@@ -468,38 +920,28 @@ function bukaKunciAudioTizen() {
 function playTone(freq, type, duration, delay = 0) {
   initAudioEngine();
   if (!audioCtx) return;
-
   setTimeout(() => {
     try {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-
       osc.type = type;
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
-
       osc.connect(gain);
       gain.connect(audioCtx.destination);
-
       osc.start(audioCtx.currentTime);
       osc.stop(audioCtx.currentTime + duration);
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) { console.error(e); }
   }, delay);
 }
 
 function playChimeNotification(freqs = [440, 554.37, 659.25]) {
-  freqs.forEach((f, i) => {
-    playTone(f, 'sine', 0.8, i * 250);
-  });
+  freqs.forEach((f, i) => playTone(f, 'sine', 0.7, i * 200));
 }
 
 function panggilSuaraAI(teks) {
   playChimeNotification([523.25, 659.25, 783.99, 1046.50]);
-
   setTimeout(() => {
     try {
       const existingAudio = document.getElementById('audioTTS');
@@ -516,55 +958,80 @@ function panggilSuaraAI(teks) {
           window.speechSynthesis.cancel();
           const speech = new SpeechSynthesisUtterance(teks);
           speech.lang = 'id-ID';
-          speech.pitch = 1.2;
+          speech.pitch = 1.1;
           window.speechSynthesis.speak(speech);
         }
       });
-    } catch (e) {
-      console.error("Gagal memutar audio TTS:", e);
-    }
-  }, 1200);
+    } catch (e) { console.error("Gagal memutar audio TTS:", e); }
+  }, 1000);
 }
 
-function updateDateTime() {
+function updateAllDateTime() {
   try {
     const now = new Date();
-    currentHours = String(now.getHours()).padStart(2, '0');
-    currentMinutes = String(now.getMinutes()).padStart(2, '0');
-
-    document.getElementById('clock').textContent = currentHours + ':' + currentMinutes;
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeStr = hours + ':' + minutes;
 
     const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    document.getElementById('date').textContent = now.toLocaleDateString('id-ID', options);
+    const dateStr = now.toLocaleDateString('id-ID', options);
+
+    document.getElementById('clock-1').textContent = timeStr;
+    document.getElementById('date-1').textContent = dateStr;
+    document.getElementById('clock-2').textContent = timeStr;
+    document.getElementById('date-2').textContent = dateStr;
 
     updateStatusBadges();
-  } catch(err) { console.error(err); }
+  } catch (err) { console.error(err); }
+}
+
+/* ==========================================================================
+   BAGIAN 3: LOGIKA SLIDE 1 (PENGUMUMAN / JADWAL KEGIATAN)
+   ========================================================================== */
+const dbURLPengumuman = "https://api.npoint.io/79fb87bf4e7964927964";
+let systemSchedules = [];
+let editingRowIndex = -1;
+let spokenSchedules = new Set();
+
+function generateOptionsHTML(max, selectedVal) {
+  let html = '';
+  for (let i = 0; i < max; i++) {
+    const val = String(i).padStart(2, '0');
+    html += '<option value="' + val + '" ' + (val === selectedVal ? 'selected' : '') + '>' + val + '</option>';
+  }
+  return html;
+}
+
+function initTimePickers() {
+  ['startHour', 'endHour'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = generateOptionsHTML(24, '00');
+  });
+  ['startMinute', 'endMinute'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = generateOptionsHTML(60, '00');
+  });
 }
 
 async function loadDataFromCloud() {
   if (editingRowIndex !== -1) return;
   try {
-    const response = await fetch(dbURL + '?_=' + new Date().getTime());
-    if (!response.ok) throw new Error("Gagal mengambil data dari server online");
-
-    systemSchedules = await response.json();
-    if (!Array.isArray(systemSchedules)) systemSchedules = [];
+    const response = await fetch(dbURLPengumuman + '?_=' + new Date().getTime());
+    if (!response.ok) return;
+    const data = await response.json();
+    systemSchedules = Array.isArray(data) ? data : [];
     renderSchedules(false);
-  } catch (e) {
-    console.error("Error mengambil data dari cloud:", e);
-  }
+  } catch (e) { console.error("Error mengambil data Pengumuman:", e); }
 }
 
 async function saveDataToCloud() {
   try {
-    await fetch(dbURL, {
+    await fetch(dbURLPengumuman, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(systemSchedules)
     });
-  } catch (e) {
-    console.error("Gagal menyimpan data ke cloud:", e);
-  }
+  } catch (e) { console.error("Gagal menyimpan data Pengumuman:", e); }
 }
 
 function formatTanggalIndo(dateStr) {
@@ -577,11 +1044,10 @@ function formatTanggalIndo(dateStr) {
 function renderSchedules(shouldSave = true) {
   const mainTbody = document.getElementById('main-table-body');
   if (!mainTbody) return;
-
   mainTbody.innerHTML = '';
 
   if (systemSchedules.length === 0) {
-    mainTbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #94a3b8; font-weight: bold;">Tidak ada agenda kegiatan saat ini. Klik + Tambah Agenda untuk membuat baru.</td></tr>';
+    mainTbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #94a3b8; font-weight: bold; padding: 40px;">Tidak ada agenda kegiatan saat ini. Klik + Tambah Agenda untuk membuat baru.</td></tr>';
     if (shouldSave) saveDataToCloud();
     return;
   }
@@ -595,7 +1061,7 @@ function renderSchedules(shouldSave = true) {
   systemSchedules.forEach((item, index) => {
     const tr = document.createElement('tr');
     tr.setAttribute('id', 'row-' + index);
-    
+
     if (editingRowIndex === index) {
       const parts = (item.waktu || '08:00 - 10:00').split('-');
       const sParts = parts[0].trim().split(':');
@@ -636,12 +1102,9 @@ function renderSchedules(shouldSave = true) {
       tr.setAttribute('data-end-date', item.tglSelesai || '');
       tr.setAttribute('data-index', index);
 
-      let displayTanggal = '';
-      if (item.tglMulai === item.tglSelesai) {
-        displayTanggal = formatTanggalIndo(item.tglMulai);
-      } else {
-        displayTanggal = formatTanggalIndo(item.tglMulai) + ' s/d ' + formatTanggalIndo(item.tglSelesai);
-      }
+      let displayTanggal = (item.tglMulai === item.tglSelesai)
+        ? formatTanggalIndo(item.tglMulai)
+        : formatTanggalIndo(item.tglMulai) + ' s/d ' + formatTanggalIndo(item.tglSelesai);
 
       tr.innerHTML = 
         '<td class="col-time">' +
@@ -661,7 +1124,6 @@ function renderSchedules(shouldSave = true) {
           '</div>' +
         '</td>';
     }
-
     mainTbody.appendChild(tr);
   });
 
@@ -677,13 +1139,10 @@ function enableInlineEdit(index) {
 function saveInlineEdit(index) {
   const tglMulai = document.getElementById('edit-tglMulai').value;
   const tglSelesai = document.getElementById('edit-tglSelesai').value;
-  
   const sH = document.getElementById('edit-sH').value;
   const sM = document.getElementById('edit-sM').value;
-
   const eH = document.getElementById('edit-eH').value;
   const eM = document.getElementById('edit-eM').value;
-
   const kegiatan = document.getElementById('edit-kegiatan').value.trim();
   const pimpinan = document.getElementById('edit-pimpinan').value.trim();
   const personel = document.getElementById('edit-personel').value.trim();
@@ -720,13 +1179,10 @@ function deleteSchedule(index) {
 async function addNewSchedule() {
   const tglMulai = document.getElementById('inputTglMulai').value;
   const tglSelesai = document.getElementById('inputTglSelesai').value;
-  
   const sH = document.getElementById('startHour').value;
   const sM = document.getElementById('startMinute').value;
-
   const eH = document.getElementById('endHour').value;
   const eM = document.getElementById('endMinute').value;
-
   const waktu = sH + ':' + sM + ' - ' + eH + ':' + eM;
   const kegiatan = document.getElementById('inputKegiatan').value.trim();
   const pimpinan = document.getElementById('inputPimpinan').value.trim();
@@ -740,7 +1196,7 @@ async function addNewSchedule() {
 
   systemSchedules.push({ tglMulai, tglSelesai, waktu, kegiatan, pimpinan, personel, gam, lokasi });
   renderSchedules(true);
-  
+
   document.getElementById('inputKegiatan').value = '';
   document.getElementById('inputPimpinan').value = '';
   document.getElementById('inputPersonel').value = '';
@@ -772,19 +1228,13 @@ function updateStatusBadges() {
 
       const cleanTimeRange = timeRange.replace(/\./g, ':');
       const [startTime, endTime] = cleanTimeRange.split('-');
-      
       const startParts = startTime.split(':').map(Number);
       const endParts = endTime.split(':').map(Number);
 
-      const jamMulai = startParts[0], menitMulai = startParts[1] || 0;
-      const jamSelesai = endParts[0], menitSelesai = endParts[1] || 0;
+      const waktuMulaiLengkap = new Date(startDateStr).setHours(startParts[0], startParts[1] || 0, 0, 0);
+      const waktuSelesaiLengkap = new Date(endDateStr).setHours(endParts[0], endParts[1] || 0, 59, 999);
 
-      const waktuMulaiLengkap = new Date(startDateStr).setHours(jamMulai, menitMulai, 0, 0);
-      const waktuSelesaiLengkap = new Date(endDateStr).setHours(jamSelesai, menitSelesai, 59, 999);
-
-      badge.className = 'status-badge';
       const baseKey = startDateStr + '-' + endDateStr + '-' + timeRange + '-' + eventName;
-      
       let pimpinanText = (leaderName && leaderName !== '-') ? ', dipimpin oleh ' + leaderName : '';
 
       if (waktuSekarangLengkap > waktuSelesaiLengkap) {
@@ -796,11 +1246,7 @@ function updateStatusBadges() {
           spokenSchedules.add(keySelesai);
           panggilSuaraAI('Informasi, kegiatan ' + eventName + pimpinanText + ' di lokasi ' + roomName + ' telah selesai.');
         }
-
-        // Tandai indeks jadwal untuk dihapus otomatis
-        if (!isNaN(idx) && !indicesToRemove.includes(idx)) {
-          indicesToRemove.push(idx);
-        }
+        if (!isNaN(idx) && !indicesToRemove.includes(idx)) indicesToRemove.push(idx);
 
       } else if (waktuSekarangLengkap >= waktuMulaiLengkap && waktuSekarangLengkap <= waktuSelesaiLengkap) {
         badge.textContent = 'Berlangsung';
@@ -822,18 +1268,12 @@ function updateStatusBadges() {
           panggilSuaraAI('Pemberitahuan, kegiatan ' + eventName + pimpinanText + ' di lokasi ' + roomName + ' dalam status menunggu.');
         }
       }
-
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) { console.error(error); }
   });
 
-  // Hapus otomatis jadwal yang sudah selesai & perbarui cloud database
   if (indicesToRemove.length > 0) {
     indicesToRemove.sort((a, b) => b - a);
-    indicesToRemove.forEach(index => {
-      systemSchedules.splice(index, 1);
-    });
+    indicesToRemove.forEach(index => systemSchedules.splice(index, 1));
     renderSchedules(true);
   }
 }
@@ -842,12 +1282,243 @@ function toggleModal(show) {
   document.getElementById('settingModal').classList.toggle('active', show);
 }
 
-// Inisialisasi awal
+/* ==========================================================================
+   BAGIAN 4: LOGIKA SLIDE 2 (PROGJA / MONITORING STATUS TUGAS)
+   ========================================================================== */
+const dbURLProgja = "https://api.npoint.io/b09bcf371bcb97f3cdcb";
+let systemTasks = [];
+let editingProgjaIndex = -1;
+let isSavingProgja = false;
+let isProgjaLoaded = false;
+
+async function loadProgjaData() {
+  if (editingProgjaIndex !== -1 || isSavingProgja) return;
+  try {
+    const response = await fetch(dbURLProgja + '?nocache=' + new Date().getTime(), {
+      method: 'GET',
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' },
+      cache: 'no-store'
+    });
+    if (response.ok) {
+      const cloudData = await response.json();
+      if (Array.isArray(cloudData)) {
+        isProgjaLoaded = true;
+        if (JSON.stringify(cloudData) !== JSON.stringify(systemTasks)) {
+          systemTasks = cloudData;
+          renderTasks(false);
+        }
+      }
+    }
+  } catch (e) { console.error("Koneksi cloud Progja terganggu:", e); }
+}
+
+async function saveProgjaData() {
+  if (!isProgjaLoaded && systemTasks.length === 0) return;
+  isSavingProgja = true;
+  try {
+    await fetch(dbURLProgja, {
+      method: 'POST',
+      headers: { "Content-Type": "application/json", "Cache-Control": "no-cache, no-store, must-revalidate" },
+      body: JSON.stringify(systemTasks)
+    });
+  } catch (e) { console.error("Gagal sinkronisasi Progja ke cloud:", e); }
+  finally {
+    setTimeout(() => { isSavingProgja = false; }, 2500);
+  }
+}
+
+function formatTanggalSimple(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: '2-digit' });
+}
+
+function renderTasks(triggerSave = true) {
+  const tbody = document.getElementById('progja-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  if (systemTasks.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; color: #64748b; font-weight: bold; padding: 40px;">Database Progja Kosong. Klik + Tambah Tugas untuk membuat entry baru.</td></tr>';
+    if (triggerSave) saveProgjaData();
+    return;
+  }
+
+  systemTasks.forEach((item, index) => {
+    if (!item.status) item.status = 'AKAN';
+    if (item.isPenting === undefined) item.isPenting = false;
+    if (!item.jenis) item.jenis = 'Rutin';
+
+    const tr = document.createElement('tr');
+    tr.setAttribute('id', 'progja-row-' + index);
+
+    if (editingProgjaIndex === index) {
+      tr.innerHTML = 
+        '<td class="col-no">' + (index + 1) + '</td>' +
+        '<td class="col-tgl"><input type="date" class="edit-date" id="edit-p-tgl" value="' + item.tgl + '"></td>' +
+        '<td class="col-jam"><input type="time" class="edit-input" id="edit-p-jam" value="' + (item.jam || '08:00') + '"></td>' +
+        '<td class="col-tugas"><input type="text" class="edit-input" id="edit-p-tugas" value="' + item.tugas + '"></td>' +
+        '<td class="col-penting">' +
+          '<select id="edit-p-penting" class="edit-select"><option value="ya" ' + (item.isPenting ? 'selected' : '') + '>Ya</option><option value="tidak" ' + (!item.isPenting ? 'selected' : '') + '>Tidak</option></select>' +
+        '</td>' +
+        '<td class="col-jenis">' +
+          '<select id="edit-p-jenis" class="edit-select"><option value="Rutin" ' + (item.jenis === 'Rutin' ? 'selected' : '') + '>Rutin</option><option value="Tambahan" ' + (item.jenis === 'Tambahan' ? 'selected' : '') + '>Tambahan</option></select>' +
+        '</td>' +
+        '<td colspan="3"><span style="color:#f59e0b; font-weight:bold; font-size:0.85rem;">MENGEDIT...</span></td>' +
+        '<td class="col-ket"><input type="text" class="edit-input" id="edit-p-keterangan" value="' + (item.keterangan || '') + '"></td>' +
+        '<td class="col-action-p">' +
+          '<div class="btn-action-group">' +
+            '<button class="btn-icon btn-save" onclick="saveProgjaInlineEdit(' + index + ')" title="Simpan">' + iconSave + '</button>' +
+          '</div>' +
+        '</td>';
+    } else {
+      let displayTgl = formatTanggalSimple(item.tgl);
+      tr.innerHTML = 
+        '<td class="col-no">' + (index + 1) + '</td>' +
+        '<td class="col-tgl">' + displayTgl + '</td>' +
+        '<td class="col-jam">' + (item.jam || '-') + '</td>' +
+        '<td class="col-tugas">' + item.tugas + '</td>' +
+        '<td class="col-penting">' +
+          '<label class="chk-container chk-penting">' +
+            '<input type="checkbox" ' + (item.isPenting ? 'checked' : '') + ' onchange="togglePenting(' + index + ', this.checked)">' +
+            '<span class="checkmark"></span>' +
+          '</label>' +
+        '</td>' +
+        '<td class="col-jenis" style="font-weight:800; color:' + (item.jenis === 'Rutin' ? '#38bdf8' : '#fbbf24') + ';">' + item.jenis.toUpperCase() + '</td>' +
+        '<td class="col-st-akan">' +
+          '<label class="chk-container chk-akan">' +
+            '<input type="checkbox" ' + (item.status === 'AKAN' ? 'checked' : '') + ' onchange="changeTaskStatus(' + index + ', \'AKAN\')">' +
+            '<span class="checkmark"></span>' +
+          '</label>' +
+        '</td>' +
+        '<td class="col-st-sedang">' +
+          '<label class="chk-container chk-sedang">' +
+            '<input type="checkbox" ' + (item.status === 'SEDANG' ? 'checked' : '') + ' onchange="changeTaskStatus(' + index + ', \'SEDANG\')">' +
+            '<span class="checkmark"></span>' +
+          '</label>' +
+        '</td>' +
+        '<td class="col-st-selesai">' +
+          '<label class="chk-container chk-selesai">' +
+            '<input type="checkbox" ' + (item.status === 'SELESAI' ? 'checked' : '') + ' onchange="changeTaskStatus(' + index + ', \'SELESAI\')">' +
+            '<span class="checkmark"></span>' +
+          '</label>' +
+        '</td>' +
+        '<td class="col-ket">' + (item.keterangan || '-') + '</td>' +
+        '<td class="col-action-p">' +
+          '<div class="btn-action-group">' +
+            '<button class="btn-icon btn-edit" onclick="enableProgjaInlineEdit(' + index + ')" title="Edit">' + iconPencil + '</button>' +
+            '<button class="btn-icon btn-delete" onclick="deleteTask(' + index + ')" title="Hapus">' + iconTrash + '</button>' +
+          '</div>' +
+        '</td>';
+    }
+    tbody.appendChild(tr);
+  });
+
+  if (triggerSave) saveProgjaData();
+}
+
+function changeTaskStatus(index, newStatus) {
+  const oldStatus = systemTasks[index].status;
+  if (oldStatus === newStatus) {
+    systemTasks[index].status = 'AKAN';
+  } else {
+    systemTasks[index].status = newStatus;
+    let statusText = 'akan dikerjakan';
+    if (newStatus === 'SEDANG') statusText = 'sedang dikerjakan';
+    if (newStatus === 'SELESAI') statusText = 'telah selesai';
+    panggilSuaraAI('Pemberitahuan Progja. Tugas ' + systemTasks[index].tugas + ' ' + statusText);
+  }
+  renderTasks(true);
+}
+
+function togglePenting(index, isChecked) {
+  systemTasks[index].isPenting = isChecked;
+  saveProgjaData();
+}
+
+function enableProgjaInlineEdit(index) {
+  editingProgjaIndex = index;
+  renderTasks(false);
+}
+
+function saveProgjaInlineEdit(index) {
+  const tgl = document.getElementById('edit-p-tgl').value;
+  const jam = document.getElementById('edit-p-jam').value;
+  const tugas = document.getElementById('edit-p-tugas').value.trim();
+  const isPenting = document.getElementById('edit-p-penting').value === 'ya';
+  const jenis = document.getElementById('edit-p-jenis').value;
+  const keterangan = document.getElementById('edit-p-keterangan').value.trim();
+
+  if (!tgl || !tugas) return alert("Tanggal dan Tugas wajib diisi!");
+
+  systemTasks[index] = { ...systemTasks[index], tgl, jam, tugas, isPenting, jenis, keterangan };
+  editingProgjaIndex = -1;
+  renderTasks(true);
+}
+
+function deleteTask(index) {
+  if (confirm("Hapus tugas ini secara permanen dari database Progja?")) {
+    systemTasks.splice(index, 1);
+    renderTasks(true);
+  }
+}
+
+function addNewTask() {
+  const tgl = document.getElementById('inputTgl').value;
+  const jam = document.getElementById('inputJam').value;
+  const tugas = document.getElementById('inputTugas').value.trim();
+  const isPenting = document.getElementById('inputPenting').value === 'ya';
+  const jenis = document.getElementById('inputJenis').value;
+  const keterangan = document.getElementById('inputKeterangan').value.trim();
+
+  if (!tgl || !tugas) return alert("Isi tanggal dan nama tugas!");
+
+  systemTasks.push({
+    tgl, jam, tugas, isPenting, jenis, status: 'AKAN', keterangan
+  });
+
+  renderTasks(true);
+  document.getElementById('inputTugas').value = '';
+  document.getElementById('inputKeterangan').value = '';
+  toggleProgjaModal(false);
+}
+
+function toggleProgjaModal(show) {
+  document.getElementById('progjaModal').classList.toggle('active', show);
+}
+
+/* ==========================================================================
+   INISIALISASI GLOBAL & SINKRONISASI INTERVAL
+   ========================================================================== */
+document.getElementById('inputTgl').valueAsDate = new Date();
+document.getElementById('inputTglMulai').valueAsDate = new Date();
+document.getElementById('inputTglSelesai').valueAsDate = new Date();
+
 initTimePickers();
-setInterval(updateDateTime, 1000);
-updateDateTime();
+loadSlideTimerSettings();
+
+// Loop Jam & Rotasi Slide setiap 1 detik
+setInterval(() => {
+  updateAllDateTime();
+  tickSlideRotation();
+}, 1000);
+updateAllDateTime();
+
+// Load awal & interval sinkronisasi Cloud masing-masing slide
 loadDataFromCloud();
+loadProgjaData();
 setInterval(loadDataFromCloud, 5000);
+setInterval(loadProgjaData, 4000);
+
+// Navigasi keyboard (Panah Kiri/Kanan untuk ganti slide manual)
+document.addEventListener('keydown', (e) => {
+  const isModalOpen = document.querySelector('.modal-overlay.active') !== null;
+  if (isModalOpen || editingRowIndex !== -1 || editingProgjaIndex !== -1) return;
+
+  if (e.key === 'ArrowRight') goToSlide((currentSlideIndex + 1) % 2);
+  if (e.key === 'ArrowLeft') goToSlide((currentSlideIndex + 1) % 2);
+});
 </script>
 </body>
 </html>
