@@ -195,7 +195,6 @@ body {
 
 #slide-pengumuman tr:hover td { background: rgba(51, 65, 85, 0.4); }
 
-/* WARNA KOLOM MENYALA & HIGH CONTRAST ASLI PENGUMUMAN */
 #slide-pengumuman .col-time {
   font-weight: 800;
   color: #facc15;
@@ -250,7 +249,6 @@ body {
 #slide-pengumuman .col-status { text-align: center; width: 9%; }
 #slide-pengumuman .col-action { text-align: center; width: 9%; }
 
-/* BADGE STATUS MENYALA ASLI PENGUMUMAN */
 #slide-pengumuman .status-badge {
   display: inline-block; padding: 8px 14px; border-radius: 20px; font-size: 0.95rem;
   font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing: 0.5px;
@@ -395,17 +393,13 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
+  scroll-behavior: smooth;
 }
 
 #slide-progja .table-container::-webkit-scrollbar { width: 8px; }
 #slide-progja .table-container::-webkit-scrollbar-track { background: rgba(13, 17, 23, 0.5); }
 #slide-progja .table-container::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
 #slide-progja .table-container::-webkit-scrollbar-thumb:hover { background: #374151; }
-
-/* Tambahan styling smooth scrolling untuk auto-scroll tabel Progja */
-#slide-progja .table-container {
-  scroll-behavior: smooth;
-}
 
 #slide-progja table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; }
 
@@ -439,7 +433,6 @@ body {
 #slide-progja .col-ket { width: 13%; text-align: left; color: #94a3b8; font-weight: 600; font-size: 0.9rem; }
 #slide-progja .col-action { width: 5%; }
 
-/* CUSTOM CHECKBOX PROGJA */
 #slide-progja .chk-container {
   display: inline-flex; align-items: center; justify-content: center;
   cursor: pointer; user-select: none;
@@ -674,7 +667,6 @@ body {
 }
 .btn-add:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
 
-/* OVERLAY UNLOCK AUDIO TIZEN */
 #tizenAudioUnlocker {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
   background: rgba(2, 6, 23, 0.96); z-index: 99999;
@@ -694,7 +686,7 @@ body {
   </button>
 </div>
 
-<!-- PROGRESS BAR ROTASI SLIDE -->
+<!-- PROGRESS TRACK -->
 <div class="top-progress-track">
   <div class="top-progress-fill" id="slideProgressFill"></div>
 </div>
@@ -711,9 +703,7 @@ body {
 
 <div class="slide-wrapper">
 
-  <!-- ========================================================= -->
-  <!-- SLIDE 1: PENGUMUMAN (ASLI PENGUMUMAN.txt)                 -->
-  <!-- ========================================================= -->
+  <!-- SLIDE 1: PENGUMUMAN -->
   <section class="slide active" id="slide-pengumuman">
     <header>
       <div class="logo-title">
@@ -753,9 +743,7 @@ body {
     </main>
   </section>
 
-  <!-- ========================================================= -->
-  <!-- SLIDE 2: PROGJA (ASLI PROGJA.txt)                         -->
-  <!-- ========================================================= -->
+  <!-- SLIDE 2: PROGJA -->
   <section class="slide" id="slide-progja">
     <header>
       <div class="logo-title">
@@ -800,9 +788,7 @@ body {
 
 </div>
 
-<!-- ========================================================= -->
-<!-- MODAL 1: TAMBAH AGENDA PENGUMUMAN                         -->
-<!-- ========================================================= -->
+<!-- MODAL 1: TAMBAH AGENDA -->
 <div class="modal-overlay" id="settingModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -869,9 +855,7 @@ body {
   </div>
 </div>
 
-<!-- ========================================================= -->
-<!-- MODAL 2: TAMBAH TUGAS PROGJA                              -->
-<!-- ========================================================= -->
+<!-- MODAL 2: TAMBAH TUGAS PROGJA -->
 <div class="modal-overlay" id="progjaModal">
   <div class="modal-content" style="border-color: rgba(245, 158, 11, 0.45);">
     <div class="modal-header">
@@ -921,9 +905,7 @@ body {
   </div>
 </div>
 
-<!-- ========================================================= -->
-<!-- MODAL 3: PENGATURAN WAKTU SETIAP SLIDE                    -->
-<!-- ========================================================= -->
+<!-- MODAL 3: PENGATURAN WAKTU SLIDE -->
 <div class="modal-overlay" id="timerModal">
   <div class="modal-content" style="max-width: 460px; border-color: rgba(56, 189, 248, 0.5);">
     <div class="modal-header">
@@ -957,9 +939,7 @@ body {
   </div>
 </div>
 
-<!-- ========================================================= -->
-<!-- MODAL 4: KONFIRMASI HAPUS & NOTIFIKASI KUSTOM             -->
-<!-- ========================================================= -->
+<!-- MODAL 4: KONFIRMASI HAPUS & NOTIFIKASI -->
 <div class="modal-overlay" id="confirmDeleteModal">
   <div class="modal-content" style="max-width: 440px; border-color: rgba(239, 68, 68, 0.55);">
     <div class="modal-header" style="border-bottom-color: rgba(239, 68, 68, 0.3);">
@@ -988,9 +968,6 @@ body {
 </div>
 
 <script>
-/* ==========================================================================
-   MODAL KONFIRMASI & PESAN KUSTOM (PENGGANTI CONFIRM & ALERT BROWSER)
-   ========================================================================== */
 let pendingDeleteCallback = null;
 let currentSlideIndex = 0;
 let slideDurations = [15, 15];
@@ -998,9 +975,8 @@ let slideRemainingSec = 15;
 let isSlidePaused = false;
 let isAutoRotateEnabled = true;
 
-// Variabel pengontrol auto-scroll Slide 2
 let progjaScrollTimer = null;
-let progjaScrollDirection = 1; // 1 = turun, -1 = naik
+let progjaScrollDirection = 1;
 
 function openConfirmDeleteModal(message, onConfirm) {
   document.getElementById('confirmDeleteMessage').textContent = message;
@@ -1044,6 +1020,9 @@ function loadSlideTimerSettings() {
         isAutoRotateEnabled = parsed.autoRotate;
         isSlidePaused = !isAutoRotateEnabled;
       }
+      if (typeof parsed.lastSlideIndex === 'number') {
+        currentSlideIndex = parsed.lastSlideIndex;
+      }
     }
   } catch (e) { console.error(e); }
 
@@ -1051,6 +1030,8 @@ function loadSlideTimerSettings() {
   document.getElementById('durationSlide2').value = slideDurations[1];
   document.getElementById('autoRotateSelect').value = isAutoRotateEnabled ? 'on' : 'off';
   slideRemainingSec = slideDurations[currentSlideIndex];
+  
+  goToSlide(currentSlideIndex);
   updateSlideNavUI();
 }
 
@@ -1067,7 +1048,8 @@ function saveSlideTimerSettings() {
   try {
     localStorage.setItem('slog_slide_timer_cfg', JSON.stringify({
       durations: slideDurations,
-      autoRotate: isAutoRotateEnabled
+      autoRotate: isAutoRotateEnabled,
+      lastSlideIndex: currentSlideIndex
     }));
   } catch (e) { console.error(e); }
 
@@ -1084,7 +1066,6 @@ function goToSlide(index) {
   const p1 = document.getElementById('pill-slide-1');
   const p2 = document.getElementById('pill-slide-2');
 
-  // Reset atau atur ulang auto-scroll saat berpindah slide
   const tableContainerProgja = s2.querySelector('.table-container');
   if (index === 1) {
     s1.classList.remove('active');
@@ -1092,8 +1073,6 @@ function goToSlide(index) {
     p1.className = 'slide-pill';
     p2.className = 'slide-pill active-s2';
     document.getElementById('slideProgressFill').style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
-    
-    // Mulai auto-scroll smooth jika tabel melebihi tinggi container
     startProgjaAutoScroll();
   } else {
     s1.classList.add('active');
@@ -1101,11 +1080,16 @@ function goToSlide(index) {
     p1.className = 'slide-pill active-s1';
     p2.className = 'slide-pill';
     document.getElementById('slideProgressFill').style.background = 'linear-gradient(90deg, #38bdf8, #10b981)';
-    
-    // Hentikan auto-scroll saat di slide 1
     stopProgjaAutoScroll();
     if (tableContainerProgja) tableContainerProgja.scrollTop = 0;
   }
+
+  try {
+    const saved = localStorage.getItem('slog_slide_timer_cfg');
+    let parsed = saved ? JSON.parse(saved) : { durations: slideDurations, autoRotate: isAutoRotateEnabled };
+    parsed.lastSlideIndex = currentSlideIndex;
+    localStorage.setItem('slog_slide_timer_cfg', JSON.stringify(parsed));
+  } catch (e) { console.error(e); }
 
   updateSlideNavUI();
 }
@@ -1115,7 +1099,6 @@ function startProgjaAutoScroll() {
   const tableContainer = document.querySelector('#slide-progja .table-container');
   if (!tableContainer) return;
 
-  // Cek apakah konten melebihi tinggi kotak tabel
   if (tableContainer.scrollHeight <= tableContainer.clientHeight) return;
 
   progjaScrollDirection = 1;
@@ -1129,15 +1112,13 @@ function startProgjaAutoScroll() {
 
     if (progjaScrollDirection === 1) {
       if (tableContainer.scrollTop >= maxScrollTop - 5) {
-        // Sampai di bawah, jeda sejenak lalu balik arah ke atas
         progjaScrollDirection = -1;
         setTimeout(() => {}, 2000);
       } else {
-        tableContainer.scrollTop += 1.5; // Kecepatan gulir halus
+        tableContainer.scrollTop += 1.5;
       }
     } else {
       if (tableContainer.scrollTop <= 5) {
-        // Sampai di atas, jeda sejenak lalu turun kembali
         progjaScrollDirection = 1;
         setTimeout(() => {}, 2000);
       } else {
@@ -1208,9 +1189,6 @@ function toggleTimerModal(show) {
   document.getElementById('timerModal').classList.toggle('active', show);
 }
 
-/* ==========================================================================
-   BAGIAN 2: AUDIO ENGINE & JAM REAL-TIME
-   ========================================================================== */
 let audioCtx = null;
 const iconPencil = '<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
 const iconTrash = '<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
@@ -1314,9 +1292,6 @@ function updateDateTime() {
   } catch (err) { console.error(err); }
 }
 
-/* ==========================================================================
-   BAGIAN 3: LOGIKA SLIDE 1 (PENGUMUMAN / JADWAL KEGIATAN)
-   ========================================================================== */
 const dbURL = "https://api.npoint.io/79fb87bf4e7964927964";
 let systemSchedules = [];
 let editingRowIndex = -1;
@@ -1615,9 +1590,6 @@ function toggleModal(show) {
   document.getElementById('settingModal').classList.toggle('active', show);
 }
 
-/* ==========================================================================
-   BAGIAN 4: LOGIKA SLIDE 2 (PROGJA / MONITORING STATUS TUGAS)
-   ========================================================================== */
 const dbURLProgja = "https://api.npoint.io/b09bcf371bcb97f3cdcb";
 let systemTasks = [];
 let editingProgjaIndex = -1;
@@ -1806,7 +1778,7 @@ function deleteTask(index) {
     isProgjaLoaded = true;
     systemTasks.splice(index, 1);
     renderTasks(true);
-    setTimeout(startProgjaAutoScroll, 300); // Perbarui auto-scroll setelah data dihapus
+    setTimeout(startProgjaAutoScroll, 300);
   });
 }
 
@@ -1834,16 +1806,13 @@ function addNewTask() {
   document.getElementById('inputTugas').value = '';
   document.getElementById('inputKeterangan').value = '';
   toggleProgjaModal(false);
-  setTimeout(startProgjaAutoScroll, 300); // Perbarui auto-scroll setelah tugas baru ditambah
+  setTimeout(startProgjaAutoScroll, 300);
 }
 
 function toggleProgjaModal(show) {
   document.getElementById('progjaModal').classList.toggle('active', show);
 }
 
-/* ==========================================================================
-   INISIALISASI AWAL & INTERVAL
-   ========================================================================== */
 document.getElementById('inputTgl').valueAsDate = new Date();
 document.getElementById('inputTglMulai').valueAsDate = new Date();
 document.getElementById('inputTglSelesai').valueAsDate = new Date();
@@ -1862,7 +1831,6 @@ loadProgjaData();
 setInterval(loadDataFromCloud, 5000);
 setInterval(loadProgjaData, 3000);
 
-// Navigasi keyboard (Panah Kiri/Kanan untuk ganti slide manual)
 document.addEventListener('keydown', (e) => {
   const isModalOpen = document.querySelector('.modal-overlay.active') !== null;
   if (isModalOpen || editingRowIndex !== -1 || editingProgjaIndex !== -1) return;
